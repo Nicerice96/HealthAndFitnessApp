@@ -1,11 +1,24 @@
 package Model;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ApplicationInterface {
 
 
     boolean quit;
+    boolean validEmail = false;
+
+    String userName;
+
+    String userPassword;
+
+    String userEmail;
+
+    String userDateOfBirth;
+
+    String userAddress;
 
 
 
@@ -13,8 +26,19 @@ public class ApplicationInterface {
     public ApplicationInterface(){}
 
 
-    public void memberLogin(String userName, String userPassword){
+    public void memberLogin(String userName, String userPassword, String userEmail, String userDateOfBirth, String userAddress){
 
+
+    }
+
+
+    public void emailValidator(String email){
+
+        String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+
+        Matcher matcher = pattern.matcher(email);
+        this.validEmail = matcher.matches();
 
     }
 
@@ -34,14 +58,37 @@ public class ApplicationInterface {
             if (userTypeInput.toLowerCase().equals("member")){
 
                 System.out.println("Please Enter User name: ");
-                Scanner userUserName = new Scanner(System.in);
-                String userName = userUserName.nextLine();
+                Scanner scanUsername = new Scanner(System.in);
+                this.userName = scanUsername.nextLine();
 
                 System.out.println("Please Enter Password: ");
-                Scanner userUserPassword = new Scanner(System.in);
-                String userPassword = userUserPassword.nextLine();
+                Scanner scanUserPassword = new Scanner(System.in);
+                this.userPassword = scanUserPassword.nextLine();
 
-                memberLogin(userName, userPassword);
+                while (!validEmail){
+                    System.out.println("Please Enter Email:");
+                    Scanner scanEmail = new Scanner(System.in);
+                    this.userEmail = scanEmail.nextLine();
+
+                    emailValidator(userEmail);
+
+
+                    if(!validEmail){
+                        System.out.println("Email not recognized!");
+                    }
+
+                }
+                System.out.println("Please Enter Address");
+                Scanner scanAddress = new Scanner(System.in);
+                this.userAddress = scanAddress.nextLine();
+
+
+                System.out.println("Please Enter Date of Birth");
+
+                System.out.println("Please enter Home address");
+
+                memberLogin(this.userName, this.userPassword, this.userEmail, this.userDateOfBirth, this.userAddress);
+
             }
             else if (userTypeInput.toLowerCase().equals("trainer")){
                 trainerLogin();
