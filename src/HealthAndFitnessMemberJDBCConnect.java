@@ -1,3 +1,5 @@
+import Model.ApplicationInterface;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +18,7 @@ public class HealthAndFitnessMemberJDBCConnect {
         try{
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(url, user, password);
-            if(conn != null){
+            if(conn != null) {
                 System.out.println("Connected to pgAdmin successfully!");
             }
             else{
@@ -36,6 +38,10 @@ public class HealthAndFitnessMemberJDBCConnect {
 
         healthAndFitnessMemberJDBCConnect.connectToDatabase();
 
+
+        ApplicationInterface applicationInterface = new ApplicationInterface();
+
+        applicationInterface.run();
 
     }
 
