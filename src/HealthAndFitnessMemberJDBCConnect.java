@@ -12,7 +12,7 @@ public class HealthAndFitnessMemberJDBCConnect {
 
     public void connectToDatabase(){
         String url = "jdbc:postgresql://localhost:5432/HealthAndFitnessDB";
-        String user = "Member";
+        String user = "Admin";
         String password = "M3mb3rP@ssw0rd!";
 
         try{
