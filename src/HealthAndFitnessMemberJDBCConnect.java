@@ -32,6 +32,11 @@ public class HealthAndFitnessMemberJDBCConnect {
         }
     }
 
+
+
+
+
+
     public static void main(String[] args) {
 
         HealthAndFitnessMemberJDBCConnect healthAndFitnessMemberJDBCConnect = new HealthAndFitnessMemberJDBCConnect();
