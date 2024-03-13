@@ -1,10 +1,12 @@
-import Model.ApplicationInterface;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class HealthAndFitnessMemberJDBCConnect {
+
+    private Connection conn;
 
 
     HealthAndFitnessMemberJDBCConnect(){}
@@ -24,7 +26,7 @@ public class HealthAndFitnessMemberJDBCConnect {
             else{
                 System.out.println("Could not connect!");
             }
-            conn.close();
+
 
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -32,6 +34,22 @@ public class HealthAndFitnessMemberJDBCConnect {
         }
     }
 
+    public void closeJDBCConnection(){
+
+        try {
+            this.conn.close();
+        }
+        catch (Exception e){
+
+            e.printStackTrace();
+        }
+
+    }
+
+    public Connection getConn(){
+
+        return this.conn;
+    }
 
 
 
@@ -44,7 +62,7 @@ public class HealthAndFitnessMemberJDBCConnect {
         healthAndFitnessMemberJDBCConnect.connectToDatabase();
 
 
-        ApplicationInterface applicationInterface = new ApplicationInterface();
+        ApplicationInterface applicationInterface = new ApplicationInterface(healthAndFitnessMemberJDBCConnect);
 
         applicationInterface.run();
 
