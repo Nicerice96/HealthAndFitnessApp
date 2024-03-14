@@ -105,7 +105,7 @@ public class ApplicationInterface {
 
     public void memberLogin(){
 
-        System.out.println("1. Login\n2. Create Account?");
+        System.out.println("1. Login\n2. Create Account?\nPress 0 to exit and close application");
 
         Scanner userInput = new Scanner(System.in);
         String userInputString = userInput.nextLine();
@@ -204,7 +204,7 @@ public class ApplicationInterface {
 
         while(!quit){
 
-            System.out.println("Application running : Please indicate whether you are a Member, Trainer, or Admin");
+            System.out.println("Application running : Please indicate whether you are a Member, Trainer, or Admin\nTo close the app press 0");
 
             Scanner userType = new Scanner(System.in);
             String userTypeInput = userType.nextLine();
@@ -222,6 +222,11 @@ public class ApplicationInterface {
             else if (userTypeInput.toLowerCase().equals("admin")){
                 adminLogin();
 
+            }
+            else{
+                System.out.println("Shutting down...");
+                this.quit = true;
+                this.connect.closeJDBCConnection();
             }
 
 
