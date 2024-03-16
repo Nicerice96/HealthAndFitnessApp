@@ -116,21 +116,24 @@ public class ApplicationInterface {
             Scanner scanUsername = new Scanner(System.in);
             this.userName = scanUsername.nextLine();
 
-            System.out.println("Please Enter Password: ");
-            Scanner scanUserPassword = new Scanner(System.in);
-            this.userPassword = scanUserPassword.nextLine();
+            int attempts = 0;
+            while (attempts < 3) {
 
-            boolean login = validateLogin(userName, userPassword);
+                System.out.println("Please Enter Password: ");
+                Scanner scanUserPassword = new Scanner(System.in);
+                this.userPassword = scanUserPassword.nextLine();
 
-            if (login){
-                System.out.println("Login success!");
+                boolean login = validateLogin(userName, userPassword);
 
-
-                MemberFunctions memberFunctions = new MemberFunctions(this.connect, this.member_id);
-                memberFunctions.startMemberFunctions();
-            }
-            else{
-                System.out.println("Incorrect Password!");
+                if (login) {
+                    System.out.println("Login success!");
+                    MemberFunctions memberFunctions = new MemberFunctions(this.connect, this.member_id);
+                    attempts = 3;
+                    memberFunctions.startMemberFunctions();
+                } else {
+                    System.out.println("Incorrect Password!");
+                    attempts ++;
+                }
             }
 
 
