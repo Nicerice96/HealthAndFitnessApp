@@ -3,6 +3,8 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +15,7 @@ public class ApplicationInterface {
 
 
     private int member_id;
+    private int trainer_id;
 
 
     boolean quit;
@@ -36,7 +39,7 @@ public class ApplicationInterface {
         this.connect = connect;
     }
 
-    public boolean checkIfExists(String userName){
+    public boolean checkIfMemberExists(String userName){
 
         String findUser = "SELECT username FROM member WHERE username = ?";
 
@@ -59,8 +62,32 @@ public class ApplicationInterface {
 
     }
 
+    public boolean checkIfTrainerExists(String userName){
 
-    public void createAccount(String userName, String userPassword, String userEmail, String userDateOfBirth, String userAddress){
+        String searchUser = "SELECT name FROM trainer WHERE name = ?";
+
+        try{
+
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(searchUser);
+            preparedStatement.setString(1, userName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void createMemberAccount(String userName, String userPassword, String userEmail, String userDateOfBirth, String userAddress){
 
         String insertAccount = "INSERT INTO member (username, password, email, date_of_birth, address) VALUES (?, ?, ?, ?, ?)";
 
@@ -79,7 +106,38 @@ public class ApplicationInterface {
         }
     }
 
-    public boolean validateLogin(String userName, String Password){
+
+    private void createTrainerAccount(String trainerName, String specialization, String startDate, String endDate) {
+
+        String createTrainer = "INSERT INTO trainer (name, specialization, start_availability, end_availability) VALUES (?, ?, ?, ?)";
+
+        try{
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedStartDate = dateFormat.parse(startDate);
+            java.sql.Date startDateSQL = new java.sql.Date(parsedStartDate.getTime());
+
+            java.util.Date parsedEndDate = dateFormat.parse(startDate);
+            java.sql.Date endDateSQL = new java.sql.Date(parsedEndDate.getTime());
+
+
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(createTrainer);
+            preparedStatement.setString(1, trainerName);
+            preparedStatement.setString(2, specialization);
+            preparedStatement.setDate(3, startDateSQL);
+            preparedStatement.setDate(4, endDateSQL);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public boolean validateMemberLogin(String userName, String Password){
 
         String findUser = "SELECT member_id, username, password FROM member WHERE username = ? AND password = ?";
 
@@ -98,6 +156,32 @@ public class ApplicationInterface {
             else{
                 return false;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean validateTrainerLogin(String userName){
+
+        String validateLogin = "SELECT trainer_id, name FROM trainer WHERE name = ?";
+
+        try{
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(validateLogin);
+            preparedStatement.setString(1, userName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+
+                this.trainer_id = resultSet.getInt("trainer_id");
+
+                return true;
+
+            }
+            else{
+                return false;
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -123,7 +207,7 @@ public class ApplicationInterface {
                 Scanner scanUserPassword = new Scanner(System.in);
                 this.userPassword = scanUserPassword.nextLine();
 
-                boolean login = validateLogin(userName, userPassword);
+                boolean login = validateMemberLogin(userName, userPassword);
 
                 if (login) {
                     System.out.println("Login success!");
@@ -144,7 +228,7 @@ public class ApplicationInterface {
             Scanner scanUsername = new Scanner(System.in);
             this.userName = scanUsername.nextLine();
 
-            if (checkIfExists(userName)) {
+            if (checkIfMemberExists(userName)) {
                 System.out.println("User already exists!");
 
             } else {
@@ -178,7 +262,7 @@ public class ApplicationInterface {
                 String homeAddressString = scanHomeAddress.nextLine();
                 this.userAddress = homeAddressString;
 
-                createAccount(this.userName, this.userPassword, this.userEmail, this.userDateOfBirth, this.userAddress);
+                createMemberAccount(this.userName, this.userPassword, this.userEmail, this.userDateOfBirth, this.userAddress);
 
 
             }
@@ -199,7 +283,62 @@ public class ApplicationInterface {
 
     }
 
-    public void trainerLogin(){}
+    public void trainerLogin(){
+
+        System.out.println("Would you like to:\n1. Login\n2. Create Account");
+        Scanner userChoice = new Scanner(System.in);
+        int userChoiceInt = userChoice.nextInt();
+
+        if (userChoiceInt == 1) {
+
+            System.out.println("Enter your user Name");
+            Scanner scanUserName = new Scanner(System.in);
+            String userName = scanUserName.nextLine();
+
+            if (validateTrainerLogin(userName)) {
+
+                TrainerFunctions trainer = new TrainerFunctions(this.trainer_id);
+                trainer.startTrainerFunctions();
+
+            } else {
+                System.out.println("User does not exist!");
+            }
+        }
+        else if (userChoiceInt == 2){
+
+            System.out.println("Input a Trainer name:");
+            Scanner scanTrainerName = new Scanner(System.in);
+            String trainerName = scanTrainerName.nextLine();
+
+            boolean exists = checkIfTrainerExists(trainerName);
+
+            if (exists){
+                System.out.println("Trainer already Exists!");
+
+            }
+            else{
+                System.out.println("Enter Trainer specialization:");
+                Scanner scanSpecialization = new Scanner(System.in);
+                String specialization = scanSpecialization.nextLine();
+
+                System.out.println("When does Trainer availability begin?");
+                Scanner scanTrainerStart = new Scanner(System.in);
+                String startDate = scanTrainerStart.nextLine();
+
+                System.out.println("When does Trainer availability end");
+                Scanner scanTrainerEnd = new Scanner(System.in);
+                String endDate = scanTrainerEnd.nextLine();
+
+                createTrainerAccount(trainerName, specialization, startDate, endDate);
+            }
+
+
+        }
+
+
+
+
+    }
 
     public void adminLogin(){}
 

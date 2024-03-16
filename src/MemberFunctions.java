@@ -79,7 +79,7 @@ public class MemberFunctions {
 
     public void updateHeight(){
 
-        System.out.println("Enter you height in cm: ");
+        System.out.println("Enter your height in cm: ");
         Scanner scanHeight = new Scanner(System.in);
         float heightFloat = scanHeight.nextFloat();
 
@@ -95,7 +95,6 @@ public class MemberFunctions {
 
             preparedStatement.executeUpdate();
 
-            updateMeasurementDate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -107,13 +106,13 @@ public class MemberFunctions {
 
     public void insertHeight() {
 
-        System.out.println("Enter a your weight: ");
+        System.out.println("Enter a your height: ");
         Scanner scanNewHeight = new Scanner(System.in);
         float newHeight = scanNewHeight.nextFloat();
 
 
 
-        System.out.println("Enter the day of the measured weight");
+        System.out.println("Enter the day of the measured height");
         Scanner newDate = new Scanner(System.in);
         String newDateString = newDate.nextLine();
 
@@ -155,7 +154,6 @@ public class MemberFunctions {
 
             preparedStatement.executeUpdate();
 
-            updateMeasurementDate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -190,6 +188,7 @@ public class MemberFunctions {
             preparedStatement.setDate(3, startRoutineDate);
 
             preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
@@ -213,7 +212,6 @@ public class MemberFunctions {
 
             preparedStatement.executeUpdate();
 
-            updateMeasurementDate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -259,40 +257,68 @@ public class MemberFunctions {
 
 
 
-    public void updateMeasurementDate(){
+    public void updateMeasurementDate() throws SQLException, ParseException {
+        System.out.println("Would you like to update:\n1. Metrics\n2. Routine");
+        Scanner scanUserMetricChoice = new Scanner(System.in);
+        int userMetricChoice = scanUserMetricChoice.nextInt();
 
-        System.out.println("When did you measure this metric? (Enter date in format yyyy-MM-dd)");
-        Scanner scanDate = new Scanner(System.in);
-        String dateStringInput = scanDate.next();
-
-
-        try {
+        if (userMetricChoice == 1) {
+            System.out.println("When did you measure this metric? (Enter date in format yyyy-MM-dd)");
+            Scanner scanDate = new Scanner(System.in);
+            String dateStringInput = scanDate.next();
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date parsedDate = dateFormat.parse(dateStringInput);
             java.sql.Date date = new java.sql.Date(parsedDate.getTime());
-            String setDate = "UPDATE member_fitness_metric SET measurement_date = ? WHERE member_id = ?";
 
-            try{
-                PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(setDate);
+            String updateQuery = "UPDATE member_fitness_metric SET measurement_date = ? WHERE member_id = ?";
+            try (PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(updateQuery)) {
                 preparedStatement.setDate(1, date);
                 preparedStatement.setInt(2, this.member_id);
-
                 preparedStatement.executeUpdate();
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
-        } catch (Exception e) {
-            System.out.println("Invalid date format. Please enter date in format yyyy-MM-dd");
         }
 
+        else if (userMetricChoice == 2) {
+            display("member_routine", "routine_title");
+            System.out.println("Select a routine you would like to update by typing it out:");
+            try  {
+                Scanner scanSelectedRoutine = new Scanner(System.in);
+                String selectedRoutineString = scanSelectedRoutine.nextLine();
 
+                System.out.println("Would you like to update:\n1. Start Date\n2. End Date");
+                int userInput = scanUserMetricChoice.nextInt();
 
+                if (userInput == 1 || userInput == 2) {
+                    System.out.println("Enter the new date (yyyy-MM-dd):");
+                    try (Scanner scanDate = new Scanner(System.in)) {
+                        String newDateString = scanDate.nextLine();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date parsedDate = dateFormat.parse(newDateString);
+                        java.sql.Date date = new java.sql.Date(parsedDate.getTime());
 
-
-        //update last time you made the above measurments
+                        String updateColumn = (userInput == 1) ? "start_date" : "end_date";
+                        String updateQuery = "UPDATE member_routine SET " + updateColumn + " = ? WHERE routine_title = ?";
+                        try (PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(updateQuery)) {
+                            preparedStatement.setDate(1, date);
+                            preparedStatement.setString(2, selectedRoutineString);
+                            preparedStatement.executeUpdate();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    System.out.println("Invalid choice.");
+                }
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
+
+
 
     public void updateFitnessGoal(){
 
@@ -356,22 +382,26 @@ public class MemberFunctions {
 
     public void insertFitnessGoal(){
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Enter your Fitness Goal/Exercise Routine:");
-            String fitnessGoal = scanner.nextLine();
+        Scanner scanGoal = new Scanner(System.in);
+        System.out.println("Enter your Fitness Goal/Exercise Routine:");
+        String fitnessGoal = scanGoal.nextLine();
 
-            System.out.println("Describe your Fitness Goal/Exercise Routine:");
-            String description = scanner.nextLine();
+        Scanner scanDescription = new Scanner(System.in);
+        System.out.println("Describe your Fitness Goal/Exercise Routine:");
+        String description = scanDescription.nextLine();
 
-            System.out.println("When do you plan to start this routine? (yyyy-MM-dd):");
-            String startDateStr = scanner.nextLine();
+        Scanner scanStartDate = new Scanner(System.in);
+        System.out.println("When do you plan to start this routine? (yyyy-MM-dd):");
+        String startDateStr = scanStartDate.nextLine();
 
-            System.out.println("When do you plan to end this routine? (yyyy-MM-dd):");
-            String endDateStr = scanner.nextLine();
+        Scanner scanEndDate = new Scanner(System.in);
+        System.out.println("When do you plan to end this routine? (yyyy-MM-dd):");
+        String endDateStr = scanEndDate.nextLine();
 
-            String insertGoal = "INSERT INTO member_routine (member_id, routine_title, description, start_date, end_date) VALUES (?, ?, ?, ?, ?)";
 
-            try {
+        String insertGoal = "INSERT INTO member_routine (member_id, routine_title, description, start_date, end_date) VALUES (?, ?, ?, ?, ?)";
+
+        try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 java.util.Date parsedStartDate = dateFormat.parse(startDateStr);
                 java.util.Date parsedEndDate = dateFormat.parse(endDateStr);
@@ -390,7 +420,7 @@ public class MemberFunctions {
             } catch (SQLException | ParseException e) {
                 throw new RuntimeException(e);
             }
-        }
+
     }
 
     public void display(String table, String coloumn){
@@ -418,7 +448,7 @@ public class MemberFunctions {
     }
 
 
-    public void updateMeasurementData(int selectedOption){
+    public void updateMeasurementData(int selectedOption) throws SQLException, ParseException {
 
         if (selectedOption == 1){
 
@@ -429,40 +459,67 @@ public class MemberFunctions {
             if (userInput == 1) {
                 insertWeight();
             }
-            else{
+            else if (userInput == 2){
                 updateWeight();
             }
+
         }
         else if (selectedOption == 2){
             System.out.println("Would you like to:\n1. Insert a new height\n2. Update your already existing height?");
-            updateHeight();
+            Scanner scanner = new Scanner(System.in);
+            int userInput = scanner.nextInt();
+
+            if (userInput == 1){
+                insertHeight();
+            }
+            else if (userInput == 2){
+                updateHeight();
+            }
         }
         else if (selectedOption == 3){
-            System.out.println("Would you like to:\n1. Insert a new height\n2. Update your already existing height?");
+            System.out.println("Would you like to:\n1. Insert a new bmi\n2. Update your already existing bmi?");
+            Scanner scanner = new Scanner(System.in);
+            int userInput = scanner.nextInt();
 
-            updateBMI();
+            if (userInput == 1) {
+                insertBMI();
+            }
+
+            else if (userInput == 2){
+                updateBMI();
+            }
         }
         else if (selectedOption == 4){
-            System.out.println("Would you like to:\n1. Insert a new height\n2. Update your already existing height?");
+            System.out.println("Would you like to:\n1. Insert a new body fat percentage\n2. Update your already existing body fat percentage?");
+            Scanner scanner = new Scanner(System.in);
+            int userInput = scanner.nextInt();
 
-            updateBodyFatPercentage();
+            if (userInput == 1){
+                insertBodyFatPercentage();
+            }
+            else{
+                updateBodyFatPercentage();
+            }
+
+
         }
         else if (selectedOption == 5){
-            System.out.println("Would you like to:\n1. Insert a new height\n2. Update your already existing height?");
-
+            System.out.println("You selected \"Updating Measurement Date\"");
             updateMeasurementDate();
         }
         else if (selectedOption == 6){
-            System.out.println("Would you like to:\n1. Insert a new height\n2. Update your already existing height?");
-
-            updateFitnessGoal();
+            System.out.println("Would you like to:\n1. Insert a new goal\n2. Update your already existing goal?");
+            Scanner scanner = new Scanner(System.in);
+            int userInt = scanner.nextInt();
+            if (userInt == 1){
+                insertFitnessGoal();
+            }
+            else if (userInt == 2){
+                updateFitnessGoal();
+            }
         }
-        else {
 
-            //exiting
-
-        }
-
+        //Press any key to exit
     }
 
     public void exit(){
@@ -472,38 +529,68 @@ public class MemberFunctions {
     }
     public void profileManagement(){
 
-        System.out.println("What would you like to do to your account?\n1. Update weight\n2. Update height\n3. Update bmi\n4. Update body fat percentage\n5. Update measurement date\n6. Update fitness routine/goals\nPress 0 to exit");
+        try {
 
-        Scanner userUpdate = new Scanner(System.in);
-        String userUpdateString = userUpdate.nextLine();
+            System.out.println("What would you like to do to your account?\n1. Update weight\n2. Update height\n3. Update bmi\n4. Update body fat percentage\n5. Update measurement date\n6. Update fitness routine/goals\nPress 0 to exit");
+
+            Scanner userUpdate = new Scanner(System.in);
+            int userInput = userUpdate.nextInt();
+            userUpdate.nextLine();
 
 
-        updateMeasurementData(Integer.parseInt(userUpdateString));
+            System.out.println("User entered: " + userInput);
+
+
+            updateMeasurementData(userInput);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
 
 
     }
 
     public void dashboardDisplay(){
 
-        String displayRoutine = "SELECT * FROM member_routine WHERE member_id = ? ORDER BY routine_id ASC";
-        String fitnessMetrics = "SELECT * FROM member_fitness_metrics WHERE member_id = ?";
+        String displayRoutine = "SELECT * FROM member_routine WHERE member_id = ?";
+        String fitnessMetrics = "SELECT * FROM member_fitness_metric WHERE member_id = ?";
 
 
-
+//
 
         try {
 
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(displayRoutine);
+            PreparedStatement preparedStatement1 = this.connect.getConn().prepareStatement(fitnessMetrics);
+
             preparedStatement.setInt(1, this.member_id);
+            preparedStatement1.setInt(1, this.member_id);
+
             ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+
+
 
             while (resultSet.next()) {
+
+
                 String routineTitle = resultSet.getString("routine_title");
                 String description = resultSet.getString("description");
                 Date startDate = resultSet.getDate("start_date");
                 Date endDate = resultSet.getDate("end_date");
 
-                System.out.println("routineTitle: " + routineTitle + ", description: " + description +", start Date: " + startDate + ", end Date: " + endDate);
+                System.out.println("Routine Title: " + routineTitle + ", Description: " + description +", Start Date: " + startDate + ", End Date: " + endDate);
+            }
+
+            while (resultSet1.next()) {
+                float weight = resultSet1.getFloat("weight");
+                float height = resultSet1.getFloat("height");
+                float bmi = resultSet1.getFloat("bmi");
+                float bodyFatPercentage = resultSet1.getFloat("body_fat_percentage");
+                Date date = resultSet1.getDate("measurement_date");
+
+                System.out.println("Weight: " + weight + ", Height: " + height +", BMI: " + bmi + ", Body Fat Percentage: " + bodyFatPercentage + ", Measured on: " + date);
             }
 
         } catch (SQLException e) {
@@ -511,7 +598,15 @@ public class MemberFunctions {
         }
     }
 
-    public void scheduleManagement(){}
+    public void scheduleManagement(){
+
+
+        System.out.println("Specify a date you would like to be scheduled for a session and you will be allocated an available Trainer (YYYY-MM-DD)");
+        Scanner scanDate = new Scanner(System.in);
+        String dateString = scanDate.nextLine();
+
+        String findTrainer = "";
+    }
 
     public void startMemberFunctions(){
         System.out.println("Welcome! Ready to get healthy! (I'm not) what actions would you like perform?");
