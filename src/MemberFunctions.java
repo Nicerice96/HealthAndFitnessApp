@@ -12,15 +12,12 @@ public class MemberFunctions {
 
     private HealthAndFitnessMemberJDBCConnect connect;
 
-    private boolean memberWeightAdded;
-
 
     boolean flag = true;
 
     MemberFunctions(HealthAndFitnessMemberJDBCConnect connect, int member_id){
         this.member_id = member_id;
         this.connect = connect;
-        memberWeightAdded = false;
     }
 
 
@@ -86,9 +83,12 @@ public class MemberFunctions {
         Scanner scanHeight = new Scanner(System.in);
         float heightFloat = scanHeight.nextFloat();
 
+
         String updateHeight = "UPDATE member_fitness_metric SET height = ? WHERE member_id = ?";
 
         try {
+
+
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(updateHeight);
             preparedStatement.setFloat(1, heightFloat);
             preparedStatement.setInt(2, this.member_id);
@@ -103,6 +103,42 @@ public class MemberFunctions {
 
 
     }
+
+
+    public void insertHeight() {
+
+        System.out.println("Enter a your weight: ");
+        Scanner scanNewHeight = new Scanner(System.in);
+        float newHeight = scanNewHeight.nextFloat();
+
+
+
+        System.out.println("Enter the day of the measured weight");
+        Scanner newDate = new Scanner(System.in);
+        String newDateString = newDate.nextLine();
+
+
+        String insertHeight = "INSERT INTO member_fitness_metric (member_id, height, measurement_date) VALUES (?, ?, ?)";
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedStartDate = dateFormat.parse(newDateString);
+            java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+
+            PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
+            preparedStatement.setInt(1, this.member_id);
+            preparedStatement.setFloat(2, newHeight);
+            preparedStatement.setDate(3, startRoutineDate);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void updateBMI(){
 
         System.out.println("Enter you bmi: ");
@@ -116,6 +152,7 @@ public class MemberFunctions {
             preparedStatement.setFloat(1, bmiFloat);
             preparedStatement.setInt(2, this.member_id);
 
+
             preparedStatement.executeUpdate();
 
             updateMeasurementDate();
@@ -125,6 +162,42 @@ public class MemberFunctions {
         }
 
     }
+
+    public void insertBMI(){
+
+
+        System.out.println("Enter a your BMI: ");
+        Scanner scanNewBMI = new Scanner(System.in);
+        float newBMI = scanNewBMI.nextFloat();
+
+
+
+        System.out.println("Enter the day of the measured your BMI");
+        Scanner newDate = new Scanner(System.in);
+        String newDateString = newDate.nextLine();
+
+
+        String insertHeight = "INSERT INTO member_fitness_metric (member_id, bmi, measurement_date) VALUES (?, ?, ?)";
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedStartDate = dateFormat.parse(newDateString);
+            java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+
+            PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
+            preparedStatement.setInt(1, this.member_id);
+            preparedStatement.setFloat(2, newBMI);
+            preparedStatement.setDate(3, startRoutineDate);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     public void updateBodyFatPercentage(){
         System.out.println("Enter your body fat percentage: ");
@@ -148,6 +221,43 @@ public class MemberFunctions {
 
 
     }
+
+    public void insertBodyFatPercentage(){
+
+        System.out.println("Enter a your body fat percentage: ");
+        Scanner scanNewBodyFatPercentage = new Scanner(System.in);
+        float newBodyFatPercentage = scanNewBodyFatPercentage.nextFloat();
+
+
+
+        System.out.println("Enter the day of the measured your body fat percentage");
+        Scanner newDate = new Scanner(System.in);
+        String newDateString = newDate.nextLine();
+
+
+        String insertHeight = "INSERT INTO member_fitness_metric (member_id, body_fat_percentage, measurement_date) VALUES (?, ?, ?)";
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedStartDate = dateFormat.parse(newDateString);
+            java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+
+            PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
+            preparedStatement.setInt(1, this.member_id);
+            preparedStatement.setFloat(2, newBodyFatPercentage);
+            preparedStatement.setDate(3, startRoutineDate);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
 
     public void updateMeasurementDate(){
 
@@ -184,11 +294,13 @@ public class MemberFunctions {
         //update last time you made the above measurments
     }
 
-    public void updateFitnessGoals(){
+    public void updateFitnessGoal(){
 
-        System.out.println("Enter your Fitness Goal/Exercise Routine: ");
-        Scanner scanFitnessGoals = new Scanner(System.in);
-        String scanFitnessString = scanFitnessGoals.nextLine();
+        display("member_routine", "routine title" );
+
+        System.out.println("Enter the Fitness Goal/Exercise Routine you want to UPDATE: ");
+        Scanner scanRoutine = new Scanner(System.in);
+        String routineString = scanRoutine.nextLine();
 
         System.out.println("Describe your Fitness Goal/Exercise Routine");
         Scanner scanDescription = new Scanner(System.in);
@@ -202,10 +314,9 @@ public class MemberFunctions {
         Scanner scanEndDate = new Scanner(System.in);
         String endDate = scanEndDate.nextLine();
 
-        String updateGoal = "UPDATE member_routine SET routine_title = ? WHERE member_id = ?";
-        String updateDescription = "UPDATE member_routine SET description = ? WHERE member_id = ?";
-        String updateStartDate = "UPDATE member_routine SET start_date = ? WHERE member_id = ?";
-        String updateEndDate = "UPDATE member_routine SET end_date = ? WHERE member_id = ?";
+        String updateDescription = "UPDATE member_routine SET description = ? WHERE routine_title = ?";
+        String updateStartDate = "UPDATE member_routine SET start_date = ? WHERE routine_title = ?";
+        String updateEndDate = "UPDATE member_routine SET end_date = ? WHERE routine_title = ?";
 
 
         try {
@@ -217,23 +328,19 @@ public class MemberFunctions {
             java.sql.Date endRoutineDate = new java.sql.Date(parsedEndDate.getTime());
 
 
-            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(updateGoal);
             PreparedStatement preparedStatement1 = this.connect.getConn().prepareStatement(updateDescription);
             PreparedStatement preparedStatement2 = this.connect.getConn().prepareStatement(updateStartDate);
             PreparedStatement preparedStatement3 = this.connect.getConn().prepareStatement(updateEndDate);
 
-            preparedStatement.setString(1, scanFitnessString);
-            preparedStatement.setInt(2, this.member_id);
+
             preparedStatement1.setString(1, scanDescriptionString);
-            preparedStatement1.setInt(2, this.member_id);
-
-
+            preparedStatement1.setString(2, routineString);
             preparedStatement2.setDate(1, startRoutineDate);
-            preparedStatement2.setInt(2, this.member_id);
+            preparedStatement2.setString(2, routineString);
             preparedStatement3.setDate(1, endRoutineDate);
-            preparedStatement3.setInt(2, this.member_id);
+            preparedStatement3.setString(2, routineString);
 
-            preparedStatement.executeUpdate();
+
             preparedStatement1.executeUpdate();
             preparedStatement2.executeUpdate();
             preparedStatement3.executeUpdate();
@@ -243,6 +350,71 @@ public class MemberFunctions {
         }
 
 
+    }
+
+    //TODO: deleteroutine();
+
+    public void insertFitnessGoal(){
+
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Enter your Fitness Goal/Exercise Routine:");
+            String fitnessGoal = scanner.nextLine();
+
+            System.out.println("Describe your Fitness Goal/Exercise Routine:");
+            String description = scanner.nextLine();
+
+            System.out.println("When do you plan to start this routine? (yyyy-MM-dd):");
+            String startDateStr = scanner.nextLine();
+
+            System.out.println("When do you plan to end this routine? (yyyy-MM-dd):");
+            String endDateStr = scanner.nextLine();
+
+            String insertGoal = "INSERT INTO member_routine (member_id, routine_title, description, start_date, end_date) VALUES (?, ?, ?, ?, ?)";
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date parsedStartDate = dateFormat.parse(startDateStr);
+                java.util.Date parsedEndDate = dateFormat.parse(endDateStr);
+                java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+                java.sql.Date endRoutineDate = new java.sql.Date(parsedEndDate.getTime());
+
+                try (PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(insertGoal)) {
+                    preparedStatement.setInt(1, this.member_id);
+                    preparedStatement.setString(2, fitnessGoal);
+                    preparedStatement.setString(3, description);
+                    preparedStatement.setDate(4, startRoutineDate);
+                    preparedStatement.setDate(5, endRoutineDate);
+
+                    preparedStatement.executeUpdate();
+                }
+            } catch (SQLException | ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void display(String table, String coloumn){
+
+        String display = "SELECT ? FROM ? WHERE member_id = ?";
+
+        try{
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(display);
+            preparedStatement.setString(1, table);
+            preparedStatement.setString(2, coloumn);
+            preparedStatement.setInt(3, this.member_id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()){
+
+                String routineTitle = resultSet.getString(coloumn);
+                System.out.println("- " + routineTitle);
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -283,7 +455,7 @@ public class MemberFunctions {
         else if (selectedOption == 6){
             System.out.println("Would you like to:\n1. Insert a new height\n2. Update your already existing height?");
 
-            updateFitnessGoals();
+            updateFitnessGoal();
         }
         else {
 
@@ -313,12 +485,16 @@ public class MemberFunctions {
 
     public void dashboardDisplay(){
 
-        String displayAll = "SELECT * FROM member_routine ORDER BY routine_id ASC";
+        String displayRoutine = "SELECT * FROM member_routine WHERE member_id = ? ORDER BY routine_id ASC";
+        String fitnessMetrics = "SELECT * FROM member_fitness_metrics WHERE member_id = ?";
+
+
 
 
         try {
 
-            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(displayAll);
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(displayRoutine);
+            preparedStatement.setInt(1, this.member_id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
