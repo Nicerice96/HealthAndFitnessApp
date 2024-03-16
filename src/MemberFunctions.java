@@ -601,11 +601,43 @@ public class MemberFunctions {
     public void scheduleManagement(){
 
 
-        System.out.println("Specify a date you would like to be scheduled for a session and you will be allocated an available Trainer (YYYY-MM-DD)");
-        Scanner scanDate = new Scanner(System.in);
-        String dateString = scanDate.nextLine();
+        System.out.println("Specify time-frame you would like to be scheduled for a session and you will be allocated an available Trainer (YYYY-MM-DD)\nStart Date:");
+        Scanner scanStartDate = new Scanner(System.in);
+        String startDate = scanStartDate.nextLine();
 
-        String findTrainer = "";
+        System.out.println("End Date:");
+        Scanner scanEndDate = new Scanner(System.in);
+        String endDate = scanEndDate.nextLine();
+
+
+        String findTrainer = "UPDATE personal_training SET member_id = ? WHERE start_date = ? AND end_date = ?";
+        ;
+
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            java.util.Date parsedStartDate = dateFormat.parse(startDate);
+            java.sql.Date startDateSQL = new java.sql.Date(parsedStartDate.getTime());
+
+            java.util.Date parsedEndDate = dateFormat.parse(endDate);
+            java.sql.Date endDateSQL = new java.sql.Date(parsedEndDate.getTime());
+            //"2023-02-23"	"2024-03-01"
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(findTrainer);
+
+            preparedStatement.setInt(1, this.member_id);
+            preparedStatement.setDate(2, startDateSQL);
+            preparedStatement.setDate(3, endDateSQL);
+
+            preparedStatement.executeUpdate();
+
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public void startMemberFunctions(){

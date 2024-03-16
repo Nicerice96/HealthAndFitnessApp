@@ -297,7 +297,7 @@ public class ApplicationInterface {
 
             if (validateTrainerLogin(userName)) {
 
-                TrainerFunctions trainer = new TrainerFunctions(this.trainer_id);
+                TrainerFunctions trainer = new TrainerFunctions(this.connect, this.trainer_id);
                 trainer.startTrainerFunctions();
 
             } else {
