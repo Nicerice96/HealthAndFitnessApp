@@ -340,7 +340,11 @@ public class ApplicationInterface {
 
     }
 
-    public void adminLogin(){}
+    public void adminLogin(){
+
+        AdminFunctions admin = new AdminFunctions(this.connect);
+        admin.startAdminFunctions();
+    }
 
     public void run(){
 
@@ -362,7 +366,24 @@ public class ApplicationInterface {
 
             }
             else if (userTypeInput.toLowerCase().equals("admin")){
-                adminLogin();
+
+//                try {
+
+                    System.out.println("Authenticating...");
+//                    Thread.sleep(5 * 1000);
+//                    System.out.println("Scanning your eyeballs :P");
+//                    Thread.sleep(2 * 1000);
+//                    System.out.println("Sequencing...");
+//                    Thread.sleep( 500);
+//                    System.out.println("loading...");
+//                    Thread.sleep( 500);
+//                    System.out.println("loading...");
+//                    Thread.sleep( 500);
+//                    System.out.println("loading...");
+                    adminLogin();
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
 
             }
             else{

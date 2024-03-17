@@ -598,6 +598,23 @@ public class MemberFunctions {
         }
     }
 
+    public void addMemberToBilling(){
+
+
+        String addBilling = "INSERT INTO billing (member_id) VALUES (?)";
+
+        try{
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(addBilling);
+            preparedStatement.setInt(1, this.member_id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
     public void scheduleManagement(){
 
 
@@ -629,6 +646,7 @@ public class MemberFunctions {
             preparedStatement.setDate(3, endDateSQL);
 
             preparedStatement.executeUpdate();
+            addMemberToBilling();
 
 
         } catch (ParseException e) {
