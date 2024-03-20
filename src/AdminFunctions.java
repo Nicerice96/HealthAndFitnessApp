@@ -9,7 +9,11 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-
+/**
+ * Performs Admin related functions
+ * @author Zarif
+ * @version 1.0
+ */
 public class AdminFunctions {
 
     private boolean flag = true;
@@ -18,14 +22,19 @@ public class AdminFunctions {
 
     private HealthAndFitnessMemberJDBCConnect connect;
 
-
+    /**
+     * Constructor for AdminFunctions class.
+     * @param connect JDBC connection instance
+     */
     AdminFunctions(HealthAndFitnessMemberJDBCConnect connect){
 
         this.connect = connect;
         this.standardTrainerFee = 17.9;
     }
 
-
+    /**
+     * Displays all available rooms along with their booking dates.
+     */
     public void displayAllRooms(){
 
         String display = "SELECT * FROM room_booking";
@@ -50,8 +59,9 @@ public class AdminFunctions {
             throw new RuntimeException(e);
         }
     }
-
-
+    /**
+     * Adds a new room to the room booking system.
+     */
     public void addRooms(){
 
         displayAllRooms();
@@ -96,7 +106,9 @@ public class AdminFunctions {
         }
 
     }
-
+    /**
+     * Removes a room from the room booking system.
+     */
     public void removeRooms(){
 
         displayAllRooms();
@@ -118,7 +130,9 @@ public class AdminFunctions {
 
 
     }
-
+    /**
+     * Updates the availability schedule of a room.
+     */
     public void updateRoomAvailability(){
 
         displayAllRooms();
@@ -157,7 +171,9 @@ public class AdminFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Manages room bookings, allowing admins to add, remove, or update room availability.
+     */
 
     public void manageRoomBookings(){
 
@@ -175,7 +191,9 @@ public class AdminFunctions {
             updateRoomAvailability();
         }
     }
-
+    /**
+     * Displays all fitness equipment along with their last maintenance date.
+     */
     public void displayAllEquipment(){
 
         String displayAll = "SELECT * FROM equipment_maintaince";
@@ -196,6 +214,9 @@ public class AdminFunctions {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * Updates the maintenance date of fitness equipment.
+     */
     public void updateMaintainceDate(){
 
         displayAllEquipment();
@@ -223,7 +244,9 @@ public class AdminFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Removes fitness equipment from the inventory.
+     */
     public void removeEquipment(){
 
         System.out.println("Enter the description of the equipment you want to remove:");
@@ -242,7 +265,9 @@ public class AdminFunctions {
             throw new RuntimeException("Error removing equipment: " + e.getMessage());
         }
     }
-
+    /**
+     * Adds new fitness equipment to the inventory.
+     */
     public void addEquipment(){
 
         System.out.println("Enter the description of the equipment:");
@@ -276,6 +301,9 @@ public class AdminFunctions {
         }
 
     }
+    /**
+     * Monitors fitness equipment, allowing admins to update maintenance dates, add, or remove equipment.
+     */
     public void monitorFitnessEquipment(){
         System.out.println("Options:\n1. Update maintaince Date\n2. Add equipment\n3. Remove equipment");
         Scanner userInput = new Scanner(System.in);
@@ -294,7 +322,9 @@ public class AdminFunctions {
                 break;
         }
     }
-
+    /**
+     * Adds a new class to the class schedule.
+     */
     public void addClass(){
             System.out.println("Enter the class name:");
             Scanner scanner = new Scanner(System.in);
@@ -326,7 +356,9 @@ public class AdminFunctions {
                 throw new RuntimeException("Error adding class: " + e.getMessage());
             }
     }
-
+    /**
+     * Removes a class from the class schedule.
+     */
     public void removeClass(){
 
         System.out.println("Enter the ID of the class you want to remove:");
@@ -352,7 +384,9 @@ public class AdminFunctions {
         }
 
     }
-
+    /**
+     * Updates class schedules, allowing admins to add or remove classes.
+     */
     public void updateClassSchedules(){
 
         System.out.println("Would you like to:\n1. Add Class\n2. Remove Class");
@@ -368,6 +402,11 @@ public class AdminFunctions {
                 break;
         }
     }
+    /**
+     * Calculates the difference in days between the start and end date of personal training sessions for a member.
+     * @param memberID The ID of the member
+     * @return The difference in days
+     */
     public int calculateDateDifference(int memberID){
 
         String difference = "SELECT AGE(end_date, start_date) FROM personal_training WHERE member_id = ?";
@@ -402,6 +441,9 @@ public class AdminFunctions {
 
 
     }
+    /**
+     * Displays all bill payees along with their billing details.
+     */
 
     public void dislpayBillPayees(){
 
@@ -428,7 +470,9 @@ public class AdminFunctions {
 
     }
 
-    //process payments for membership fees too
+    /**
+     * Processes billing for members, calculating the amount due based on personal training sessions.
+     */
     public void billing(){
 
         dislpayBillPayees();
@@ -471,12 +515,16 @@ public class AdminFunctions {
         }
 
     }
-
+    /**
+     * Exits the admin functions menu.
+     */
     public void exit(){
 
         this.flag = false;
     }
-
+    /**
+     * Starts the AdminFunctions interface, allowing admins to perform various actions.
+     */
     public void startAdminFunctions(){
 
         while (flag) {

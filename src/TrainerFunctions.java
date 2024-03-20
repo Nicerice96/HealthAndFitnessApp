@@ -5,20 +5,31 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-
+/**
+ * Performs Trainer related functions
+ * @author Zarif
+ * @version 1.0
+ */
 public class TrainerFunctions {
 
     private boolean flag = true;
 
     private HealthAndFitnessMemberJDBCConnect connect;
     private int trainerID;
-
+    /**
+     * Constructor for TrainerFunctions class.
+     * @param connect JDBC connection instance
+     * @param trainerID ID of the trainer
+     */
     TrainerFunctions(HealthAndFitnessMemberJDBCConnect connect, int trainerID){
 
         this.connect = connect;
         this.trainerID = trainerID;
     }
-
+    /**
+     * Retrieves the start date of the trainer's availability.
+     * @return The start date of availability
+     */
     public Date returnStartDate(){
 
         String returnStartDate = "SELECT trainer.start_availability FROM trainer WHERE trainer_id = ?";
@@ -43,7 +54,10 @@ public class TrainerFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Retrieves the end date of the trainer's availability.
+     * @return The end date of availability
+     */
     public Date returnEndDate(){
 
         String returnStartDate = "SELECT trainer.end_availability FROM trainer WHERE trainer_id = ?";
@@ -68,7 +82,11 @@ public class TrainerFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Updates the availability of the trainer for personal training sessions.
+     * @param startDate Start date of availability
+     * @param endDate End date of availability
+     */
     public void updateAvailableToMembers(Date startDate, Date endDate){
 
         String updateTrainer = "UPDATE personal_training SET start_date = ?, end_date = ? WHERE trainer_id = ?";
@@ -85,7 +103,9 @@ public class TrainerFunctions {
 
 
     }
-
+    /**
+     * Adds the trainer to the personal training schedule, making them available to members.
+     */
     public void makeAvailableToMembers(){
         //adds trainer to the personal training table
 
@@ -103,7 +123,9 @@ public class TrainerFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Removes the trainer from the personal training schedule, making them unavailable to members.
+     */
     public void makeUnavailableToMembers(){
 
         String makeUnavailable = "DELETE FROM personal_training WHERE trainer_id = ?";
@@ -119,7 +141,9 @@ public class TrainerFunctions {
 
         //removes the trainer from the personal training table
     }
-
+    /**
+     * Updates the availability schedule of the trainer.
+     */
     public void updateAvailability(){
 
         System.out.println("Enter new start date:");
@@ -154,7 +178,9 @@ public class TrainerFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Manages the schedule of the trainer, allowing them to make themselves available or unavailable to members.
+     */
     public void manageSchedule(){
 
         System.out.println("Manage Schedule:\n1. Make Schedule Available to Members\n2. Make Schedule Unavailable To Members\n3. Update Schedule Availability");
@@ -174,7 +200,9 @@ public class TrainerFunctions {
                 break;
         }
     }
-
+    /**
+     * Displays profiles of members assigned to the trainer along with their training schedule.
+     */
     public void viewMemberProfiles(){
 
         String getMemberID = "SELECT start_date, end_date, username, trainer.name FROM personal_training JOIN \"member\" ON personal_training.member_id = \"member\".member_id JOIN trainer ON personal_training.trainer_id = trainer.trainer_id WHERE personal_training.trainer_id = ?";
@@ -198,12 +226,16 @@ public class TrainerFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Exits the trainer functions menu.
+     */
     public void exit(){
 
         this.flag = false;
     }
-
+    /**
+     * Starts the TrainerFunctions interface, allowing trainers to perform various actions.
+     */
     public void startTrainerFunctions() {
 
         while (flag) {

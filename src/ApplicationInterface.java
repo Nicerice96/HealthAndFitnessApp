@@ -9,6 +9,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Main interface to the application
+ * @author Zarif
+ * @version 1.0
+ */
 public class ApplicationInterface {
 
     private HealthAndFitnessMemberJDBCConnect connect;
@@ -32,13 +37,22 @@ public class ApplicationInterface {
     String userAddress;
 
 
-
+    /**
+     * Constructor for the ApplicationInterface class.
+     * Initializes the ApplicationInterface with the provided HealthAndFitnessMemberJDBCConnect object.
+     * @param connect The HealthAndFitnessMemberJDBCConnect object to use for database connection.
+     */
 
     public ApplicationInterface(HealthAndFitnessMemberJDBCConnect connect ){
 
         this.connect = connect;
     }
 
+    /**
+     * Checks if a member with the given username exists in the database.
+     * @param userName The username to check for existence.
+     * @return True if the member exists, otherwise false.
+     */
     public boolean checkIfMemberExists(String userName){
 
         String findUser = "SELECT username FROM member WHERE username = ?";
@@ -61,7 +75,11 @@ public class ApplicationInterface {
         }
 
     }
-
+    /**
+     * Checks if a trainer with the given username exists in the database.
+     * @param userName The username to check for existence.
+     * @return True if the trainer exists, otherwise false.
+     */
     public boolean checkIfTrainerExists(String userName){
 
         String searchUser = "SELECT name FROM trainer WHERE name = ?";
@@ -86,7 +104,14 @@ public class ApplicationInterface {
         }
     }
 
-
+    /**
+     * Creates a new member account in the database.
+     * @param userName The username of the new member.
+     * @param userPassword The password of the new member.
+     * @param userEmail The email of the new member.
+     * @param userDateOfBirth The date of birth of the new member (formatted as "yyyy-MM-dd").
+     * @param userAddress The address of the new member.
+     */
     public void createMemberAccount(String userName, String userPassword, String userEmail, String userDateOfBirth, String userAddress){
 
         String insertAccount = "INSERT INTO member (username, password, email, date_of_birth, address) VALUES (?, ?, ?, ?, ?)";
@@ -105,7 +130,13 @@ public class ApplicationInterface {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Creates a new trainer account in the database.
+     * @param trainerName The name of the new trainer.
+     * @param specialization The specialization of the new trainer.
+     * @param startDate The start availability date of the new trainer (formatted as "yyyy-MM-dd").
+     * @param endDate The end availability date of the new trainer (formatted as "yyyy-MM-dd").
+     */
 
     private void createTrainerAccount(String trainerName, String specialization, String startDate, String endDate) {
 
@@ -135,7 +166,12 @@ public class ApplicationInterface {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Validates the login credentials of a member.
+     * @param userName The username of the member.
+     * @param Password The password of the member.
+     * @return True if the login credentials are valid, otherwise false.
+     */
 
     public boolean validateMemberLogin(String userName, String Password){
 
@@ -160,7 +196,11 @@ public class ApplicationInterface {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Validates the login credentials of a trainer.
+     * @param userName The username of the trainer.
+     * @return True if the login credentials are valid, otherwise false.
+     */
     public boolean validateTrainerLogin(String userName){
 
         String validateLogin = "SELECT trainer_id, name FROM trainer WHERE name = ?";
@@ -186,7 +226,9 @@ public class ApplicationInterface {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Initiates the login or account creation process for members.
+     */
     public void memberLogin(){
 
         System.out.println("1. Login\n2. Create Account?\nPress 0 to exit and close application");
@@ -271,7 +313,10 @@ public class ApplicationInterface {
 
     }
 
-
+    /**
+     * Validates an email address using regex pattern matching.
+     * @param email The email address to validate.
+     */
 
     public void emailValidator(String email){
 
@@ -282,7 +327,9 @@ public class ApplicationInterface {
         this.validEmail = matcher.matches();
 
     }
-
+    /**
+     * Initiates the login or account creation process for trainers.
+     */
     public void trainerLogin(){
 
         System.out.println("Would you like to:\n1. Login\n2. Create Account");
@@ -339,13 +386,21 @@ public class ApplicationInterface {
 
 
     }
-
+    /**
+     * Initiates the login process for an admin user.
+     * Creates an AdminFunctions object and starts the admin functions.
+     */
     public void adminLogin(){
 
         AdminFunctions admin = new AdminFunctions(this.connect);
         admin.startAdminFunctions();
     }
-
+    /**
+     * Runs the application and handles user interactions.
+     * Prompts the user to indicate whether they are a Member, Trainer, or Admin.
+     * Initiates corresponding login processes based on user input.
+     * Closes the application when the user chooses to quit.
+     */
     public void run(){
 
         while(!quit){

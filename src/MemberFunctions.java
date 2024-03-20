@@ -5,22 +5,63 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-
+/**
+ * Performs Member related functions such as updating weight, height, BMI, body fat percentage, measurement date,
+ * managing fitness goals, displaying dashboard, and managing scheduling.
+ *
+ * @author Zarif
+ * @version 1.0
+ */
 public class MemberFunctions {
 
     private int member_id;
 
     private HealthAndFitnessMemberJDBCConnect connect;
-
-
     boolean flag = true;
-
+    /**
+     * Constructs a new MemberFunctions object.
+     *
+     * @param connect the HealthAndFitnessMemberJDBCConnect object for database connection
+     * @param member_id the ID of the member
+     */
     MemberFunctions(HealthAndFitnessMemberJDBCConnect connect, int member_id){
         this.member_id = member_id;
         this.connect = connect;
     }
 
+    /**
+     * Checks if data within the specified coloumn is null or not; note this should only be used for fitness metrics
+     * @param coloumn
+     * @param table
+     * @return boolean
+     */
 
+    public boolean checkExists(String coloumn, String table){
+
+        String check = "SELECT " + coloumn + " FROM " + table;
+
+        try{
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(check);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                if (resultSet.wasNull()) {
+                    return false; // Data is null
+                } else {
+                    return true; // Data is not null
+                }
+            } else {
+                System.out.println("No data found in the specified table and column.");
+                return false; // No data found
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * update's the user metric weight in the database
+     */
     public void updateWeight(){
 
         System.out.println("Please input your weight:");
@@ -44,40 +85,56 @@ public class MemberFunctions {
 
     }
 
+    /**
+     * insert's the user metric weight in the database
+     */
+
     public void insertWeight() {
 
-        System.out.println("Enter a your weight: ");
-        Scanner scanNewWeight = new Scanner(System.in);
-        float newWeightFloat = scanNewWeight.nextFloat();
+        if(checkExists("weight", "member_fitness_metric")){
+            System.out.println("Data in the specified column is not null, choose option \"update\"");
 
-        System.out.println("Enter the day of the measured weight");
-        Scanner newDate = new Scanner(System.in);
-        String newDateString = newDate.nextLine();
+        }
+        else {
+
+            System.out.println("Enter a your weight: ");
+            Scanner scanNewWeight = new Scanner(System.in);
+            float newWeightFloat = scanNewWeight.nextFloat();
+
+            System.out.println("Enter the day of the measured weight");
+            Scanner newDate = new Scanner(System.in);
+            String newDateString = newDate.nextLine();
 
 
+            String insertWeight = "INSERT INTO member_fitness_metric (member_id, weight, measurement_date) VALUES (?, ?, ?)";
 
-        String insertWeight = "INSERT INTO member_fitness_metric (member_id, weight, measurement_date) VALUES (?, ?, ?)";
+            try {
 
-        try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date parsedStartDate = dateFormat.parse(newDateString);
+                java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedStartDate = dateFormat.parse(newDateString);
-            java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+                PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertWeight);
+                preparedStatement.setInt(1, this.member_id);
+                preparedStatement.setFloat(2, newWeightFloat);
+                preparedStatement.setDate(3, startRoutineDate);
+                preparedStatement.executeUpdate();
 
-            PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertWeight);
-            preparedStatement.setInt(1, this.member_id);
-            preparedStatement.setFloat(2, newWeightFloat);
-            preparedStatement.setDate(3, startRoutineDate);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
+    /**
+     * update's the user metric height in the database
+     */
+
     public void updateHeight(){
+
+
 
         System.out.println("Enter your height in cm: ");
         Scanner scanHeight = new Scanner(System.in);
@@ -103,40 +160,51 @@ public class MemberFunctions {
 
     }
 
+    /**
+     * insert's the user metric weight in the database
+     */
 
     public void insertHeight() {
 
-        System.out.println("Enter a your height: ");
-        Scanner scanNewHeight = new Scanner(System.in);
-        float newHeight = scanNewHeight.nextFloat();
+        if (checkExists("height", "member_fitness_metric")){
+            System.out.println("Data in the specified column is not null, choose option \"update\"");
+
+        }else {
+
+            System.out.println("Enter a your height: ");
+            Scanner scanNewHeight = new Scanner(System.in);
+            float newHeight = scanNewHeight.nextFloat();
 
 
+            System.out.println("Enter the day of the measured height");
+            Scanner newDate = new Scanner(System.in);
+            String newDateString = newDate.nextLine();
 
-        System.out.println("Enter the day of the measured height");
-        Scanner newDate = new Scanner(System.in);
-        String newDateString = newDate.nextLine();
 
+            String insertHeight = "INSERT INTO member_fitness_metric (member_id, height, measurement_date) VALUES (?, ?, ?)";
 
-        String insertHeight = "INSERT INTO member_fitness_metric (member_id, height, measurement_date) VALUES (?, ?, ?)";
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date parsedStartDate = dateFormat.parse(newDateString);
+                java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
 
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedStartDate = dateFormat.parse(newDateString);
-            java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+                PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
+                preparedStatement.setInt(1, this.member_id);
+                preparedStatement.setFloat(2, newHeight);
+                preparedStatement.setDate(3, startRoutineDate);
 
-            PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
-            preparedStatement.setInt(1, this.member_id);
-            preparedStatement.setFloat(2, newHeight);
-            preparedStatement.setDate(3, startRoutineDate);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
+    /**
+     * update's the user metric bmi in the database
+     */
 
     public void updateBMI(){
 
@@ -161,42 +229,55 @@ public class MemberFunctions {
 
     }
 
+    /**
+     * insert's the user metric bmi in the database
+     */
+
     public void insertBMI(){
 
+        if(checkExists("bmi", "member_fitness_metric")){
+            System.out.println("Data in the specified column is not null, choose option \"update\"");
 
-        System.out.println("Enter a your BMI: ");
-        Scanner scanNewBMI = new Scanner(System.in);
-        float newBMI = scanNewBMI.nextFloat();
-
-
-
-        System.out.println("Enter the day of the measured your BMI");
-        Scanner newDate = new Scanner(System.in);
-        String newDateString = newDate.nextLine();
+        }
+        else {
 
 
-        String insertHeight = "INSERT INTO member_fitness_metric (member_id, bmi, measurement_date) VALUES (?, ?, ?)";
+            System.out.println("Enter a your BMI: ");
+            Scanner scanNewBMI = new Scanner(System.in);
+            float newBMI = scanNewBMI.nextFloat();
 
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedStartDate = dateFormat.parse(newDateString);
-            java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
 
-            PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
-            preparedStatement.setInt(1, this.member_id);
-            preparedStatement.setFloat(2, newBMI);
-            preparedStatement.setDate(3, startRoutineDate);
+            System.out.println("Enter the day of the measured your BMI");
+            Scanner newDate = new Scanner(System.in);
+            String newDateString = newDate.nextLine();
 
-            preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+            String insertHeight = "INSERT INTO member_fitness_metric (member_id, bmi, measurement_date) VALUES (?, ?, ?)";
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date parsedStartDate = dateFormat.parse(newDateString);
+                java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+
+                PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
+                preparedStatement.setInt(1, this.member_id);
+                preparedStatement.setFloat(2, newBMI);
+                preparedStatement.setDate(3, startRoutineDate);
+
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
 
+    /**
+     * update's the user metric body_fat_percentage in the database
+     */
 
     public void updateBodyFatPercentage(){
         System.out.println("Enter your body fat percentage: ");
@@ -220,43 +301,55 @@ public class MemberFunctions {
 
     }
 
+    /**
+     * insert's the user metric body_fat_percentage in the database
+     */
     public void insertBodyFatPercentage(){
 
-        System.out.println("Enter a your body fat percentage: ");
-        Scanner scanNewBodyFatPercentage = new Scanner(System.in);
-        float newBodyFatPercentage = scanNewBodyFatPercentage.nextFloat();
+        if (checkExists("body_fat_percentage", "member_fitness_metric")){
+            System.out.println("Data in the specified column is not null, choose option \"update\"");
+
+        }
+        else {
+
+            System.out.println("Enter a your body fat percentage: ");
+            Scanner scanNewBodyFatPercentage = new Scanner(System.in);
+            float newBodyFatPercentage = scanNewBodyFatPercentage.nextFloat();
 
 
+            System.out.println("Enter the day of the measured your body fat percentage");
+            Scanner newDate = new Scanner(System.in);
+            String newDateString = newDate.nextLine();
 
-        System.out.println("Enter the day of the measured your body fat percentage");
-        Scanner newDate = new Scanner(System.in);
-        String newDateString = newDate.nextLine();
 
+            String insertHeight = "INSERT INTO member_fitness_metric (member_id, body_fat_percentage, measurement_date) VALUES (?, ?, ?)";
 
-        String insertHeight = "INSERT INTO member_fitness_metric (member_id, body_fat_percentage, measurement_date) VALUES (?, ?, ?)";
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date parsedStartDate = dateFormat.parse(newDateString);
+                java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
 
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedStartDate = dateFormat.parse(newDateString);
-            java.sql.Date startRoutineDate = new java.sql.Date(parsedStartDate.getTime());
+                PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
+                preparedStatement.setInt(1, this.member_id);
+                preparedStatement.setFloat(2, newBodyFatPercentage);
+                preparedStatement.setDate(3, startRoutineDate);
 
-            PreparedStatement preparedStatement = connect.getConn().prepareStatement(insertHeight);
-            preparedStatement.setInt(1, this.member_id);
-            preparedStatement.setFloat(2, newBodyFatPercentage);
-            preparedStatement.setDate(3, startRoutineDate);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
 
 
     }
 
-
-
+    /**
+     * update's measurement date for metrics and routine's
+     * @throws SQLException
+     * @throws ParseException
+     */
     public void updateMeasurementDate() throws SQLException, ParseException {
         System.out.println("Would you like to update:\n1. Metrics\n2. Routine");
         Scanner scanUserMetricChoice = new Scanner(System.in);
@@ -318,8 +411,9 @@ public class MemberFunctions {
         }
     }
 
-
-
+    /**
+     * update's the user fitness goals in the database
+     */
     public void updateFitnessGoal(){
 
         display("member_routine", "routine title" );
@@ -378,8 +472,9 @@ public class MemberFunctions {
 
     }
 
-    //TODO: deleteroutine();
-
+    /**
+     * insert's a new fitness goal into database
+     */
     public void insertFitnessGoal(){
 
         Scanner scanGoal = new Scanner(System.in);
@@ -423,6 +518,11 @@ public class MemberFunctions {
 
     }
 
+    /**
+     * display's all items within a table
+     * @param table
+     * @param coloumn
+     */
     public void display(String table, String coloumn){
 
         String display = "SELECT ? FROM ? WHERE member_id = ?";
@@ -447,7 +547,20 @@ public class MemberFunctions {
         }
     }
 
-
+    /**
+     * User Interface to manage metrics and routines based on the selected option.
+     * Allows the user to perform various actions related to metrics and routines, such as:
+     * - Inserting or updating weight
+     * - Inserting or updating height
+     * - Inserting or updating BMI
+     * - Inserting or updating body fat percentage
+     * - Updating measurement date
+     * - Inserting or updating fitness goals
+     *
+     * @param selectedOption the selected option from the user interface
+     * @throws SQLException if a SQL exception occurs
+     * @throws ParseException if a parse exception occurs while parsing dates
+     */
     public void updateMeasurementData(int selectedOption) throws SQLException, ParseException {
 
         if (selectedOption == 1){
@@ -522,11 +635,27 @@ public class MemberFunctions {
         //Press any key to exit
     }
 
+    /**
+     * function to exit the member functions user interface
+     */
+
     public void exit(){
 
         this.flag = false;
 
     }
+
+    /**
+     * Displays the main user interface for profile management.
+     * Allows the user to choose from various options to update their account, including:
+     * 1. Update weight
+     * 2. Update height
+     * 3. Update BMI
+     * 4. Update body fat percentage
+     * 5. Update measurement date
+     * 6. Update fitness routine/goals
+     * Press 0 to exit.
+     */
     public void profileManagement(){
 
         try {
@@ -550,6 +679,13 @@ public class MemberFunctions {
 
 
     }
+
+    /**
+     * Displays all items related to a given member user, including their routines and fitness metrics.
+     * Retrieves and prints information from the database about the member's routines and fitness metrics,
+     * such as routine title, description, start date, end date, weight, height, BMI, body fat percentage,
+     * and measurement date.
+     */
 
     public void dashboardDisplay(){
 
@@ -597,7 +733,10 @@ public class MemberFunctions {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Adds a member to the billing table in the database.
+     * Inserts a new record into the billing table with the specified member ID.
+     */
     public void addMemberToBilling(){
 
 
@@ -614,7 +753,13 @@ public class MemberFunctions {
 
 
     }
-
+    /**
+     * Manages the scheduling of sessions for a member with a trainer.
+     * Prompts the user to specify the time-frame they would like to be scheduled for a session,
+     * then allocates an available trainer within that time-frame.
+     * Updates the personal_training table in the database to assign the member to the specified time-frame.
+     * Also adds the member to the billing table.
+     */
     public void scheduleManagement(){
 
 
@@ -657,7 +802,15 @@ public class MemberFunctions {
 
 
     }
-
+    /**
+     * Initiates member functions interface.
+     * Displays a welcome message and provides options for the user to perform actions related to member functions.
+     * Allows the user to choose from the following options:
+     * 1. Manage profile (profileManagement)
+     * 2. Display dashboard (dashboardDisplay)
+     * 3. Manage schedule (scheduleManagement)
+     * Entering '0' exits the program.
+     */
     public void startMemberFunctions(){
         System.out.println("Welcome! Ready to get healthy! (I'm not) what actions would you like perform?");
 
