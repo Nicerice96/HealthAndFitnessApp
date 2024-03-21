@@ -691,6 +691,7 @@ public class MemberFunctions {
 
         String displayRoutine = "SELECT * FROM member_routine WHERE member_id = ?";
         String fitnessMetrics = "SELECT * FROM member_fitness_metric WHERE member_id = ?";
+        String personalTraining = "SELECT \"name\", start_date, end_date FROM personal_training JOIN trainer ON personal_training.trainer_id = trainer.trainer_id WHERE member_id = ?";
 
 
 //
@@ -699,12 +700,15 @@ public class MemberFunctions {
 
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(displayRoutine);
             PreparedStatement preparedStatement1 = this.connect.getConn().prepareStatement(fitnessMetrics);
+            PreparedStatement preparedStatement2 = this.connect.getConn().prepareStatement(personalTraining);
 
             preparedStatement.setInt(1, this.member_id);
             preparedStatement1.setInt(1, this.member_id);
+            preparedStatement2.setInt(1, this.member_id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSet resultSet1 = preparedStatement1.executeQuery();
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
 
 
 
@@ -727,6 +731,16 @@ public class MemberFunctions {
                 Date date = resultSet1.getDate("measurement_date");
 
                 System.out.println("Weight: " + weight + ", Height: " + height +", BMI: " + bmi + ", Body Fat Percentage: " + bodyFatPercentage + ", Measured on: " + date);
+            }
+
+            while (resultSet2.next()) {
+
+
+                String trainerName = resultSet2.getString("name");
+                Date startDate = resultSet2.getDate("start_date");
+                Date endDate = resultSet2.getDate("end_date");
+
+                System.out.println("Scheduled With: " + trainerName + " Start Date: " + startDate + ", End Date: " + endDate);
             }
 
         } catch (SQLException e) {

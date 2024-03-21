@@ -416,11 +416,11 @@ public class ApplicationInterface {
                 memberLogin();
 
             }
-            else if (userTypeInput.toLowerCase().equals("trainer")){
+            else if (userTypeInput.equalsIgnoreCase("trainer")){
                 trainerLogin();
 
             }
-            else if (userTypeInput.toLowerCase().equals("admin")){
+            else if (userTypeInput.equalsIgnoreCase("admin")){
 
 //                try {
 
