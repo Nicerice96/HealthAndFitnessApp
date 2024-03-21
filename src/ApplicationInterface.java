@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 /**
  * Main interface to the application
- * @author Zarif
+ * @author Zarif, Arun
  * @version 1.0
  */
 public class ApplicationInterface {

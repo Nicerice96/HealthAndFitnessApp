@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 /**
  * Performs Admin related functions
- * @author Zarif
+ * @author Zarif, Arun
  * @version 1.0
  */
 public class AdminFunctions {

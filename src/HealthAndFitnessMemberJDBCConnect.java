@@ -6,7 +6,7 @@ import java.sql.SQLException;
  * This class establishes a connection to a Health and Fitness database and initiates the application.
  * It utilizes JDBC to interact with the PostgreSQL database.
  *
- * @author Zarif
+ * @author Zarif, Arun
  * @version 1.0
  */
 public class HealthAndFitnessMemberJDBCConnect {

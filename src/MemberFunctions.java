@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Performs Member related functions such as updating weight, height, BMI, body fat percentage, measurement date,
  * managing fitness goals, displaying dashboard, and managing scheduling.
  *
- * @author Zarif
+ * @author Zarif, Arun
  * @version 1.0
  */
 public class MemberFunctions {
