@@ -1,3 +1,12 @@
+package org.backend;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,14 +18,41 @@ import java.sql.SQLException;
  * @author Zarif, Arun
  * @version 1.0
  */
-public class HealthAndFitnessMemberJDBCConnect {
+public class HealthAndFitnessMemberJDBCConnect extends Application {
 
     private Connection conn;
+
+    private static HealthAndFitnessMemberJDBCConnect instance;
 
     /**
      * Constructs a new HealthAndFitnessMemberJDBCConnect object.
      */
-    HealthAndFitnessMemberJDBCConnect(){}
+    public HealthAndFitnessMemberJDBCConnect(){
+
+        connectToDatabase();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Landing.fxml"));
+        try {
+            // Load the FXML layout
+            Parent root = fxmlLoader.load();
+            System.out.println("FXML file loaded successfully.");
+
+            // Create the scene
+            Scene scene = new Scene(root);
+
+            // Set the scene and show the stage
+            stage.setScene(scene);
+            stage.setTitle("Health and Fitness App");
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Error loading FXML file: " + e.getMessage());
+
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Establishes a connection to the PostgreSQL database.
@@ -69,13 +105,19 @@ public class HealthAndFitnessMemberJDBCConnect {
     /**
      * The main method to execute the program.
      *
-     * @param args command-line arguments
      */
-    public static void main(String[] args) {
-        HealthAndFitnessMemberJDBCConnect healthAndFitnessMemberJDBCConnect = new HealthAndFitnessMemberJDBCConnect();
-        healthAndFitnessMemberJDBCConnect.connectToDatabase();
 
-        ApplicationInterface applicationInterface = new ApplicationInterface(healthAndFitnessMemberJDBCConnect);
-        applicationInterface.run();
+    public static HealthAndFitnessMemberJDBCConnect getInstance(){
+
+        if (instance == null){
+            instance =  new HealthAndFitnessMemberJDBCConnect();
+        }
+        return instance;
+
+    }
+    public static void main(String[] args) {
+
+        launch(args);
+
     }
 }

@@ -37,9 +37,10 @@ _video_
 
 ## ER-Diagram
 
-![HealthAndFitnessApp-ER.drawio.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FHealthAndFitnessApp-ER.drawio.png)
+![HealthAndFitnessApp-ER.drawio.png](..%2F..%2F..%2F..%2F..%2Fdocs%2FHealthAndFitnessApp-ER.drawio.png)
 
 ## ER-Map
-![HealthAndFitnessAppER-MAP.drawio.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FHealthAndFitnessAppER-MAP.drawio.png)
+
+![HealthAndFitnessAppER-MAP.drawio.png](..%2F..%2F..%2F..%2F..%2Fdocs%2FHealthAndFitnessAppER-MAP.drawio.png)
 ---------------------------------------------------------------------
 © [2024] [Zarif Khan, Arun Karki]. All Rights Reserved.

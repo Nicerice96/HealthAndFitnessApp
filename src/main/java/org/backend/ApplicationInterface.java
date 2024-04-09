@@ -1,4 +1,4 @@
-
+package org.backend;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 public class ApplicationInterface {
 
     private HealthAndFitnessMemberJDBCConnect connect;
+
+    private static ApplicationInterface applicationInterface;
 
 
     private int member_id;
@@ -46,6 +48,10 @@ public class ApplicationInterface {
     public ApplicationInterface(HealthAndFitnessMemberJDBCConnect connect ){
 
         this.connect = connect;
+    }
+
+    public int getMember_id(){
+        return this.member_id;
     }
 
     /**
@@ -169,33 +175,33 @@ public class ApplicationInterface {
     /**
      * Validates the login credentials of a member.
      * @param userName The username of the member.
-     * @param Password The password of the member.
+     * @param userPassword The password of the member.
      * @return True if the login credentials are valid, otherwise false.
      */
 
-    public boolean validateMemberLogin(String userName, String Password){
+        public boolean validateMemberLogin(String userName, String userPassword){
 
-        String findUser = "SELECT member_id, username, password FROM member WHERE username = ? AND password = ?";
+            String findUser = "SELECT member_id, username, password FROM member WHERE username = ? AND password = ?";
+            String userNameFormatted = userName.replaceAll("\\s+", "");
+            try{
 
-        try{
+                PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(findUser);
+                preparedStatement.setString(1, userNameFormatted);
+                preparedStatement.setString(2, userPassword);
+                ResultSet userMatch = preparedStatement.executeQuery();
 
-            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(findUser);
-            preparedStatement.setString(1, userName);
-            preparedStatement.setString(2, Password);
-            ResultSet userMatch = preparedStatement.executeQuery();
+                if (userMatch.next()){
 
-            if (userMatch.next()){
-
-                this.member_id = userMatch.getInt("member_id");
-                return true;
+                    this.member_id = userMatch.getInt("member_id");
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-            else{
-                return false;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
-    }
     /**
      * Validates the login credentials of a trainer.
      * @param userName The username of the trainer.
@@ -382,9 +388,6 @@ public class ApplicationInterface {
 
         }
 
-
-
-
     }
     /**
      * Initiates the login process for an admin user.
@@ -447,8 +450,18 @@ public class ApplicationInterface {
                 this.connect.closeJDBCConnection();
             }
 
-
-
         }
+
     }
+
+    public static ApplicationInterface getInstance(){
+
+        if (applicationInterface == null){
+            applicationInterface = new ApplicationInterface(HealthAndFitnessMemberJDBCConnect.getInstance());
+        }
+        return applicationInterface;
+
+
+    }
+
 }

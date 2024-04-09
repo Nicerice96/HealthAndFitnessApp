@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="935.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.AdminAuthenticationController">
+   <children>
+      <Label alignment="CENTER" layoutX="1.0" layoutY="615.0" prefHeight="63.0" prefWidth="935.0" text="Copyright © 2024 ActiveEdge. All rights reserved.This application is licensed to you under the terms of the ActiveEdge End User License Agreement. By using this application, you agree to abide by the terms and conditions set forth in the agreement." textAlignment="CENTER" textFill="#a9a9a9" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <Label layoutX="316.0" layoutY="338.0" style="-fx-text-fill: #e1e1e1;" text="Making sure it's you" textFill="#e1e1e1">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="ellipses" layoutX="572.0" layoutY="338.0" prefHeight="40.0" prefWidth="62.0" style="-fx-text-fill: #e1e1e1;" text="..." textFill="#e1e1e1">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="112.0" fitWidth="200.0" layoutX="368.0" layoutY="175.0">
+         <image>
+            <Image url="/WindowsHello_thumb (1).png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

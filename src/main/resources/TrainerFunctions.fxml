@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="935.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.TrainerFunctionsController">
+   <children>
+      <Label text="Welcome,">
+         <font>
+            <Font size="43.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="251.2" layoutY="615.0" prefHeight="35.0" prefWidth="684.0" text="Copyright © 2024 ActiveEdge. All rights reserved.This application is licensed to you under the terms of the ActiveEdge End User License Agreement. By using this application, you agree to abide by the terms and conditions set forth in the agreement." textAlignment="CENTER" textFill="#a9a9a9" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="251.0" AnchorPane.rightAnchor="0.0" />
+      <VBox prefHeight="676.0" prefWidth="255.0" style="-fx-background-color: #364e7a;">
+         <children>
+            <Label text="Trainer Options" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Start Date:" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="trainerStartDate" style="-fx-background-color: #596f96; -fx-text-fill: #ffffff;">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="End Date:" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="trainerEndDate" style="-fx-background-color: #596f96; -fx-text-fill: #ffffff;">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="setDateButton" mnemonicParsing="false" onAction="#setDate" prefHeight="26.0" prefWidth="84.0" text="Set Date">
+               <VBox.margin>
+                  <Insets bottom="50.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Button>
+            <Label fx:id="errorMsg" prefHeight="28.0" prefWidth="237.0" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="320.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="makeAvailableButton" mnemonicParsing="false" onAction="#setAvailable" prefHeight="26.0" prefWidth="274.0" text="Make Available">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="makeUnavaiableButton" mnemonicParsing="false" onAction="#setUnavailable" prefHeight="26.0" prefWidth="274.0" text="Make Unavaiable">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children></VBox>
+      <Label layoutX="502.0" layoutY="152.0" text="Welcome," textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="39.0" />
+         </font>
+      </Label>
+      <Label fx:id="displayTrainerName" layoutX="498.0" layoutY="208.0" prefHeight="64.0" prefWidth="148.0" text="Trainer." textFill="WHITE">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="260.0" layoutY="535.0" prefHeight="32.0" prefWidth="186.0" text="Scheduled With:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="dashMember" layoutX="260.0" layoutY="576.0" prefHeight="32.0" prefWidth="629.0" text="Member:" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Circle fx:id="statusAvailable" fill="WHITE" layoutX="907.0" layoutY="592.0" radius="14.0" stroke="#ffffff00" strokeType="INSIDE" />
+      <Separator layoutX="245.0" orientation="VERTICAL" prefHeight="676.0" prefWidth="18.0" />
+   </children>
+</AnchorPane>

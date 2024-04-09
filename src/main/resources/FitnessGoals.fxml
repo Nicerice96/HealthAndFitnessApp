@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="657.0" prefWidth="847.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.MemberFitnessGoalController">
+   <children>
+      <VBox layoutX="298.0" layoutY="41.0" prefHeight="561.0" prefWidth="250.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="41.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="94.0" prefWidth="349.0" text="Fitness Goals!" textFill="#e1e1e1">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+            </Label>
+            <Label alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="326.0" text="Fitness Goal Title: " textFill="#e1e1e1">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="setFitnessGoalTitleTextField" onAction="#setFitnessGoalTitle">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="326.0" text="Describe your goal:" textFill="#e1e1e1">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="setFitnessGoalDescriptionTextField" onAction="#setFitnessGoalDescription">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="326.0" text="Input a date you would like to start:" textFill="#e1e1e1">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="startFitnessGoalDateTextField" onAction="#setStartDate">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label alignment="BOTTOM_LEFT" prefHeight="38.0" prefWidth="326.0" text="Input a date you would like to end:" textFill="#e1e1e1">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="endFitnessGoalDateTextField" onAction="#setEndDate">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+         </children>
+      </VBox>
+      <Label alignment="CENTER" layoutX="53.0" layoutY="676.0" prefHeight="51.0" prefWidth="713.0" style="-fx-background-color: #435370;" stylesheets="@LandingStyleSheet.css" text="Copyright © 2024 ActiveEdge. All rights reserved.This application is licensed to you under the terms of the ActiveEdge End User License Agreement. By using this application, you agree to abide by the terms and conditions set forth in the agreement." textAlignment="CENTER" textFill="#e7dddd" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Arial" size="9.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

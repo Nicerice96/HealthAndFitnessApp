@@ -1,7 +1,7 @@
+package org.backend;
 
 import org.postgresql.util.PGInterval;
 
-import javax.xml.transform.Result;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
