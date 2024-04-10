@@ -6,42 +6,44 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AdminFunctionController {
+public class MonitorFitnessEquipmentController {
 
     @FXML
-    private Button billingButton;
+    private Button addEquipmentButton;
 
     @FXML
-    private Button manageRoomBookingsButton;
+    private Label fitnessEquipmentDisplay;
 
     @FXML
-    private Button monitorFitnessEquipment;
+    private Label lastMaintainedDate;
 
     @FXML
-    private Button updateClassSchedulesButton;
+    private Button removeEquipmentButton;
 
     @FXML
-    void billingButtonAction(ActionEvent event) { openFXML("/Billing.fxml");
+    private Button updateDateButton;
+
+    @FXML
+    void addEquipment(ActionEvent event) {
+        openFXML("/AddEquipment.fxml");
     }
 
     @FXML
-    void manageRoomBooks(ActionEvent event) {
-        openFXML("/ManageRoomBooking.fxml");
+    void removeEquipment(ActionEvent event) {
+        openFXML("/RemoveEquipment.fxml");
+
     }
 
     @FXML
-    void monitorFitnessEquipmentAction(ActionEvent event) {
-        openFXML("/MonitorFitnessEquipment.fxml");
+    void updateDate(ActionEvent event) {
+        openFXML("/UpdateEquipmentDate.fxml");
     }
 
-    @FXML
-    void updateClassSchedulesAction(ActionEvent event) {
-        openFXML("/UpdateClassSchedules.fxml");
-    }
     public void openFXML(String fxml){
 
         try {
@@ -55,6 +57,5 @@ public class AdminFunctionController {
             throw new RuntimeException(e);
         }
     }
-
 
 }

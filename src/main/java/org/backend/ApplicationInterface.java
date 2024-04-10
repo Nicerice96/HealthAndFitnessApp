@@ -54,6 +54,8 @@ public class ApplicationInterface {
         return this.member_id;
     }
 
+    public int getTrainer_id(){return this.trainer_id; }
+
     /**
      * Checks if a member with the given username exists in the database.
      * @param userName The username to check for existence.
@@ -463,5 +465,7 @@ public class ApplicationInterface {
 
 
     }
+
+
 
 }

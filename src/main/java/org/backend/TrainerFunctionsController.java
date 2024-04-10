@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class TrainerFunctionsController implements Initializable {
 
-    private TrainerFunctions trainerFunctions = new TrainerFunctions(HealthAndFitnessMemberJDBCConnect.getInstance(), ApplicationInterface.getInstance().getMember_id());
+    private TrainerFunctions trainerFunctions = new TrainerFunctions(HealthAndFitnessMemberJDBCConnect.getInstance(), ApplicationInterface.getInstance().getTrainer_id());
 
     @FXML
     private Label dashMember;

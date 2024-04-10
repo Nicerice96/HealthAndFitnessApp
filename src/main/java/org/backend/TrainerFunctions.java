@@ -164,6 +164,7 @@ public class TrainerFunctions {
     public boolean makeAvailableToMembers(){
         //adds trainer to the personal training table
 
+        System.out.println(this.trainerID);
         if(checkExists("trainer_id, start_date, end_date", "personal_training")){
             System.out.println("You are already available to the public");
             return false;

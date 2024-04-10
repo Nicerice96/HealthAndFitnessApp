@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="657.0" prefWidth="847.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.BillingController">
+   <children>
+      <Label alignment="CENTER" layoutX="53.0" layoutY="676.0" prefHeight="51.0" prefWidth="713.0" style="-fx-background-color: #435370;" stylesheets="@LandingStyleSheet.css" text="Copyright © 2024 ActiveEdge. All rights reserved.This application is licensed to you under the terms of the ActiveEdge End User License Agreement. By using this application, you agree to abide by the terms and conditions set forth in the agreement." textAlignment="CENTER" textFill="#e7dddd" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Arial" size="9.0" />
+         </font>
+      </Label>
+      <HBox layoutX="-1.0" prefHeight="681.0" prefWidth="847.0">
+         <children>
+            <VBox prefHeight="682.0" prefWidth="421.0">
+               <children>
+                  <Label prefHeight="62.0" prefWidth="415.0" text="Members Who Are Currently Billable:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="membersDisplay" alignment="TOP_LEFT" prefHeight="630.0" prefWidth="488.0" textFill="#fafafa">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="682.0" prefWidth="421.0">
+               <children>
+                  <Label prefHeight="55.0" prefWidth="415.0" text="Issue a Bill:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="memberIDTextField" prefWidth="308.0" promptText="Enter Member ID">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="billDueDateTextField" prefWidth="308.0" promptText="Enter When this Bill is due">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="issueBillButton" mnemonicParsing="false" onAction="#setBill" prefHeight="26.0" prefWidth="143.0" text="Issue Bill!">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label fx:id="billConfirmation" prefHeight="32.0" prefWidth="402.0" textFill="WHITE">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="amount" prefHeight="32.0" prefWidth="402.0" textFill="WHITE">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

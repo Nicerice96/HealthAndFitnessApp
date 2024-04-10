@@ -22,6 +22,8 @@ public class AdminFunctions {
 
     private HealthAndFitnessMemberJDBCConnect connect;
 
+    private double totalBill;
+
     /**
      * Constructor for AdminFunctions class.
      * @param connect JDBC connection instance
@@ -35,7 +37,7 @@ public class AdminFunctions {
     /**
      * Displays all available rooms along with their booking dates.
      */
-    public void displayAllRooms(){
+    public String displayAllRooms(){
 
         String display = "SELECT * FROM room_booking";
 
@@ -43,16 +45,20 @@ public class AdminFunctions {
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(display);
             ResultSet result = preparedStatement.executeQuery();
 
+            StringBuilder rooms = new StringBuilder();
+
             while (result.next()){
 
                 int roomNumber = result.getInt("room_number");
                 Date startDate = result.getDate("start_date");
                 Date endDate = result.getDate("end_date");
 
-                System.out.println("Room number: " + roomNumber + " Room is available from: " + startDate + " to " + endDate);
+                rooms.append("Room number: ").append(roomNumber).append(" Room is available from: ").append(startDate).append(" to ").append(endDate);
 
 
             }
+
+            return String.valueOf(rooms);
 
 
         } catch (SQLException e) {
@@ -62,21 +68,10 @@ public class AdminFunctions {
     /**
      * Adds a new room to the room booking system.
      */
-    public void addRooms(){
+    public void addRooms(int roomNumber, String startDate, String endDate){
 
         displayAllRooms();
 
-        System.out.println("Enter room number:");
-        Scanner scanRoomNumber = new Scanner(System.in);
-        int roomNumber = scanRoomNumber.nextInt();
-
-        System.out.println("When is this room available?");
-        Scanner scanStartDate = new Scanner(System.in);
-        String startDate = scanStartDate.nextLine();
-
-        System.out.println("When is this room no longer available?");
-        Scanner scanEndDate = new Scanner(System.in);
-        String endDate = scanEndDate.nextLine();
 
         String addRoom = "INSERT INTO room_booking (room_number, start_date, end_date) VALUES (?, ?, ?)";
 
@@ -109,13 +104,10 @@ public class AdminFunctions {
     /**
      * Removes a room from the room booking system.
      */
-    public void removeRooms(){
+    public void removeRooms(int roomNumber){
 
         displayAllRooms();
 
-        System.out.println("Which room would you like to delete?");
-        Scanner scanRoomNumber = new Scanner(System.in);
-        int roomNumber = scanRoomNumber.nextInt();
 
         String deleteRoom = "DELETE FROM room_bookings WHERE room_number = ?";
 
@@ -133,21 +125,9 @@ public class AdminFunctions {
     /**
      * Updates the availability schedule of a room.
      */
-    public void updateRoomAvailability(){
+    public void updateRoomAvailability(int roomNumber, String startDate, String endDate){
 
         displayAllRooms();
-
-        System.out.println("Which room would you like to update?");
-        Scanner scanRoomNumber = new Scanner(System.in);
-        int roomNumber = scanRoomNumber.nextInt();
-
-        System.out.println("When is this room available?");
-        Scanner scanStartDate = new Scanner(System.in);
-        String startDate = scanStartDate.nextLine();
-
-        System.out.println("When is this room no longer available?");
-        Scanner scanEndDate = new Scanner(System.in);
-        String endDate = scanEndDate.nextLine();
 
         String updateRoom = "UPDATE room_booking SET start_date = ?, end_date = ? WHERE room_number = ?";
 
@@ -182,13 +162,13 @@ public class AdminFunctions {
         int userInput = scanUserInput.nextInt();
 
         if(userInput == 1){
-            addRooms();
+//            addRooms();
         }
         else if(userInput == 2){
-            removeRooms();
+//            removeRooms();
         }
         else if (userInput == 3){
-            updateRoomAvailability();
+//            updateRoomAvailability();    updateRoomAvailability();
         }
     }
     /**
@@ -217,13 +197,9 @@ public class AdminFunctions {
     /**
      * Updates the maintenance date of fitness equipment.
      */
-    public void updateMaintainceDate(){
+    public void updateMaintainceDate(String lastMaintained){
 
         displayAllEquipment();
-
-        System.out.println("Enter the last time this equipment was maintained:");
-        Scanner scanner = new Scanner(System.in);
-        String lastMaintained = scanner.nextLine();
 
         String updateMaintainceDate = "UPDATE equipment_maintaince SET maintaince_date = ? WHERE description = ?";
 
@@ -247,12 +223,7 @@ public class AdminFunctions {
     /**
      * Removes fitness equipment from the inventory.
      */
-    public void removeEquipment(){
-
-        System.out.println("Enter the description of the equipment you want to remove:");
-        Scanner scanner = new Scanner(System.in);
-        String equipmentDescription = scanner.nextLine();
-        scanner.close();
+    public void removeEquipment(String equipmentDescription){
 
         String removeEquipmentQuery = "DELETE FROM equipment_maintenance WHERE description = ?";
 
@@ -268,15 +239,9 @@ public class AdminFunctions {
     /**
      * Adds new fitness equipment to the inventory.
      */
-    public void addEquipment(){
+    public void addEquipment(String equipmentDescription, String lastMaintainedDate){
 
-        System.out.println("Enter the description of the equipment:");
-        Scanner scanner = new Scanner(System.in);
-        String equipmentDescription = scanner.nextLine();
 
-        System.out.println("Enter the last time this equipment was maintained (yyyy-MM-dd):");
-        String lastMaintainedDate = scanner.nextLine();
-        scanner.close();
 
         String addEquipmentQuery = "INSERT INTO equipment_maintenance (description, maintenance_date) VALUES (?, ?)";
 
@@ -312,30 +277,21 @@ public class AdminFunctions {
         switch(userInputInt){
 
             case 1:
-                updateMaintainceDate();
+//                updateMaintainceDate();
                 break;
             case 2:
-                addEquipment();
+//                addEquipment();
                 break;
             case 3:
-                removeEquipment();
+//                removeEquipment();
                 break;
         }
     }
     /**
      * Adds a new class to the class schedule.
      */
-    public void addClass(){
-            System.out.println("Enter the class name:");
-            Scanner scanner = new Scanner(System.in);
-            String className = scanner.nextLine();
+    public void addClass(String className, String startTime, String endTime){
 
-            System.out.println("Enter the start time of the class (HH:mm:ss):");
-            String startTime = scanner.nextLine();
-
-            System.out.println("Enter the end time of the class (HH:mm:ss):");
-            String endTime = scanner.nextLine();
-            scanner.close();
 
             String addClassQuery = "INSERT INTO class_schedule (class_name, start_time, end_time) VALUES (?, ?, ?)";
 
@@ -359,12 +315,8 @@ public class AdminFunctions {
     /**
      * Removes a class from the class schedule.
      */
-    public void removeClass(){
+    public void removeClass(int classId){
 
-        System.out.println("Enter the ID of the class you want to remove:");
-        Scanner scanner = new Scanner(System.in);
-        int classId = scanner.nextInt();
-        scanner.close();
 
         String removeClassQuery = "DELETE FROM class_schedule WHERE class_id = ?";
 
@@ -395,10 +347,10 @@ public class AdminFunctions {
 
         switch (userInput){
             case 1:
-                addClass();
+//                addClass();
                 break;
             case 2:
-                removeClass();
+//                removeClass();
                 break;
         }
     }
@@ -445,7 +397,7 @@ public class AdminFunctions {
      * Displays all bill payees along with their billing details.
      */
 
-    public void dislpayBillPayees(){
+    public String dislpayBillPayees(){
 
         String displayPayees = "SELECT * FROM billing";
 
@@ -453,15 +405,18 @@ public class AdminFunctions {
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(displayPayees);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            StringBuilder payees = new StringBuilder();
             while (resultSet.next()){
 
                 int memberID = resultSet.getInt("member_id");
                 Date billDueDate = resultSet.getDate("billing_date");
                 double billAmount = resultSet.getDouble("amount");
 
-                System.out.println("Member_id " + memberID + " Bill due date: " + billDueDate + " Amount due: " + billAmount);
+                payees.append("Member_id ").append(memberID).append(" Bill due date: ").append(billDueDate).append(" Amount due: ").append(billAmount).append("\n");
 
             }
+
+            return payees.toString();
 
 
         } catch (SQLException e) {
@@ -473,24 +428,12 @@ public class AdminFunctions {
     /**
      * Processes billing for members, calculating the amount due based on personal training sessions.
      */
-    public void billing(){
-
-        dislpayBillPayees();
-
-        System.out.println("Select the member you would like to calculate and a bill to?");
-        Scanner scanMemberID = new Scanner(System.in);
-        int memberID = scanMemberID.nextInt();
-
-        System.out.println("Enter when this bill is due:");
-        Scanner scanDueDate = new Scanner(System.in);
-        String dueDate = scanDueDate.nextLine();
-
+    public void billing(int memberID, String dueDate){
 
         int timespan = calculateDateDifference(memberID);
 
-        double totalBill = timespan * this.standardTrainerFee;
+        totalBill = timespan * this.standardTrainerFee;
 
-        System.out.println(totalBill);
 
 
         String billMember = "UPDATE billing SET billing_date = ?, amount = ? WHERE member_id = ?";
@@ -514,6 +457,10 @@ public class AdminFunctions {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public double getTotal(){
+        return this.totalBill;
     }
     /**
      * Exits the admin functions menu.
@@ -548,7 +495,7 @@ public class AdminFunctions {
                     break;
 
                 case 4:
-                    billing();
+//                    billing();
                     break;
                 case 0:
                     exit();
