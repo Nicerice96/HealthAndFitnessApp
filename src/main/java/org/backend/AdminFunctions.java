@@ -2,13 +2,15 @@ package org.backend;
 
 import org.postgresql.util.PGInterval;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+import static java.lang.String.valueOf;
+
 /**
  * Performs Admin related functions
  * @author Zarif, Arun
@@ -53,12 +55,12 @@ public class AdminFunctions {
                 Date startDate = result.getDate("start_date");
                 Date endDate = result.getDate("end_date");
 
-                rooms.append("Room number: ").append(roomNumber).append(" Room is available from: ").append(startDate).append(" to ").append(endDate);
+                rooms.append("Room number: ").append(roomNumber).append(" Room is available from: ").append(startDate).append(" to ").append(endDate).append("\n");
 
 
             }
 
-            return String.valueOf(rooms);
+            return valueOf(rooms);
 
 
         } catch (SQLException e) {
@@ -174,7 +176,7 @@ public class AdminFunctions {
     /**
      * Displays all fitness equipment along with their last maintenance date.
      */
-    public void displayAllEquipment(){
+    public String displayAllEquipment(){
 
         String displayAll = "SELECT * FROM equipment_maintaince";
 
@@ -182,14 +184,17 @@ public class AdminFunctions {
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(displayAll);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            StringBuilder equipment = new StringBuilder();
             while (resultSet.next()){
 
                 Date lastMaintained = resultSet.getDate("maintaince_date");
                 String description = resultSet.getString("description");
 
-                System.out.println("Equipment: " + description + " last maintained: " + lastMaintained);
+                equipment.append("Equipment: ").append(description).append(" last maintained: ").append(lastMaintained).append("\n");
 
             }
+
+            return valueOf(equipment);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -290,28 +295,35 @@ public class AdminFunctions {
     /**
      * Adds a new class to the class schedule.
      */
-    public void addClass(String className, String startTime, String endTime){
+    public void addClass(String className, String startTime, String endTime) {
+        String addClassQuery = "INSERT INTO class_schedule (class_name, start_time, end_time) VALUES (?, ?, ?)";
 
+        try {
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(addClassQuery);
+            preparedStatement.setString(1, className);
 
-            String addClassQuery = "INSERT INTO class_schedule (class_name, start_time, end_time) VALUES (?, ?, ?)";
+            // Parsing and formatting start time
+            LocalTime parsedStartTime = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("hh:mm a"));
+            String formattedStartTime = parsedStartTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+            preparedStatement.setTime(2, java.sql.Time.valueOf(formattedStartTime));
 
-            try {
-                PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(addClassQuery);
-                preparedStatement.setString(1, className);
-                preparedStatement.setTime(2, java.sql.Time.valueOf(startTime));
-                preparedStatement.setTime(3, java.sql.Time.valueOf(endTime));
+            // Parsing and formatting end time
+            LocalTime parsedEndTime = LocalTime.parse(endTime, DateTimeFormatter.ofPattern("hh:mm a"));
+            String formattedEndTime = parsedEndTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+            preparedStatement.setTime(3, java.sql.Time.valueOf(formattedEndTime));
 
-                int rowsAffected = preparedStatement.executeUpdate();
+            int rowsAffected = preparedStatement.executeUpdate();
 
-                if (rowsAffected > 0) {
-                    System.out.println("Class '" + className + "' added successfully.");
-                } else {
-                    System.out.println("Failed to add class '" + className + "'.");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException("Error adding class: " + e.getMessage());
+            if (rowsAffected > 0) {
+                System.out.println("Class '" + className + "' added successfully.");
+            } else {
+                System.out.println("Failed to add class '" + className + "'.");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error adding class: " + e.getMessage());
+        }
     }
+
     /**
      * Removes a class from the class schedule.
      */
@@ -352,6 +364,24 @@ public class AdminFunctions {
             case 2:
 //                removeClass();
                 break;
+        }
+    }
+
+    public String displayAllClasses(){
+        String displayAllClasses = "SELECT * FROM class_schedule";
+        try{
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(displayAllClasses);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            StringBuilder classes = new StringBuilder();
+            while (resultSet.next()){
+                 String className = resultSet.getString("class_name");
+                 Time startTime = resultSet.getTime("start_time");
+                 Time endTime = resultSet.getTime("end_time");
+                 classes.append(className).append(" ").append(startTime).append(" ").append(endTime).append("\n");
+            }
+            return valueOf(classes);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
     /**

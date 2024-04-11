@@ -30,9 +30,7 @@ public class MemberLoginController {
 
     @FXML
     void createAccountAction(ActionEvent event) {
-
-
-
+        openFXML("/CreateAccount.fxml");
     }
 
     @FXML

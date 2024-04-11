@@ -3,6 +3,7 @@ package org.backend;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,8 +11,13 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MonitorFitnessEquipmentController {
+public class MonitorFitnessEquipmentController implements Initializable {
+
+    private static MonitorFitnessEquipmentController monitorFitnessEquipmentController;
+    private AdminFunctions adminFunctions = new AdminFunctions(HealthAndFitnessMemberJDBCConnect.getInstance());
 
     @FXML
     private Button addEquipmentButton;
@@ -31,6 +37,7 @@ public class MonitorFitnessEquipmentController {
     @FXML
     void addEquipment(ActionEvent event) {
         openFXML("/AddEquipment.fxml");
+
     }
 
     @FXML
@@ -42,6 +49,7 @@ public class MonitorFitnessEquipmentController {
     @FXML
     void updateDate(ActionEvent event) {
         openFXML("/UpdateEquipmentDate.fxml");
+
     }
 
     public void openFXML(String fxml){
@@ -58,4 +66,23 @@ public class MonitorFitnessEquipmentController {
         }
     }
 
+    public void refreshUI(){
+        fitnessEquipmentDisplay.setText(adminFunctions.displayAllEquipment());
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        fitnessEquipmentDisplay.setText(adminFunctions.displayAllEquipment());
+    }
+
+
+    public static MonitorFitnessEquipmentController getInstance(){
+        if (monitorFitnessEquipmentController == null){
+            return monitorFitnessEquipmentController = new MonitorFitnessEquipmentController();
+        }
+        else{
+            return monitorFitnessEquipmentController;
+        }
+    }
 }

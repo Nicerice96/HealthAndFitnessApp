@@ -23,6 +23,7 @@ public class AddClassController {
     @FXML
     void addClass(ActionEvent event) {
         adminFunctions.addClass(classNameTextField.getText(), startTimeTextField.getText(), endTimeTextField.getText());
+        UpdateClassSchedulesController.getInstance().refreshUI();
     }
 
 }

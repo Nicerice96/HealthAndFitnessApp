@@ -28,5 +28,7 @@ public class RescheduleRoomController {
     @FXML
     void rescheduleRoom(ActionEvent event) {
         adminFunctions.updateRoomAvailability(Integer.parseInt(enterRoomNumberTextField.getText()), startDateTextField.getText(), endDateTextField.getText());
+        ManageRoomBookingsController.getInstance().refreshUI();
+
     }
 }

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+
+import static java.lang.String.valueOf;
+
 /**
  * Performs Member related functions such as updating weight, height, BMI, body fat percentage, measurement date,
  * managing fitness goals, displaying dashboard, and managing scheduling.
@@ -90,7 +93,7 @@ public class MemberFunctions {
             while (resultSet.next()){
 
                 weight = resultSet.getFloat("weight");
-                return String.valueOf(weight);
+                return valueOf(weight);
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -212,7 +215,7 @@ public class MemberFunctions {
 
             while (resultSet.next()){
                 float height = resultSet.getFloat("height");
-                return String.valueOf(height);
+                return valueOf(height);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -339,7 +342,7 @@ public class MemberFunctions {
             float bmi;
             while (resultSet.next()){
                 bmi = resultSet.getFloat("bmi");
-                return String.valueOf(bmi);
+                return valueOf(bmi);
 
             }
         } catch (SQLException e) {
@@ -465,7 +468,7 @@ public class MemberFunctions {
 
                 bodyFatPercentage = resultSet.getFloat("body_fat_percentage");
 
-                return String.valueOf(bodyFatPercentage);
+                return valueOf(bodyFatPercentage);
 
             }
         } catch (SQLException e) {
@@ -769,8 +772,8 @@ public class MemberFunctions {
     public void setFitnessEndDate(String endDate){
 
 
-        if (checkExists("endDate", "member_routine")){
-            String updateFitnessGoalTitle = "UPDATE member_routine SET endDate = ? WHERE member_id = " + this.member_id;
+        if (checkExists("end_date", "member_routine")){
+            String updateFitnessGoalTitle = "UPDATE member_routine SET end_date = ? WHERE member_id = " + this.member_id;
 
             try{
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -1054,6 +1057,32 @@ public class MemberFunctions {
 
 
     }
+
+    public String getTrainerDetails(){
+
+        String getTrainerDetails = "SELECT * FROM personal_training JOIN trainer ON personal_training.trainer_id = trainer.trainer_id WHERE personal_training.member_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(getTrainerDetails);
+            preparedStatement.setInt(1, this.member_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            StringBuilder trainerInfo = new StringBuilder();
+            while (resultSet.next()){
+                trainerInfo.append(resultSet.getString("name")).append(" ")
+                        .append(resultSet.getString("specialization")).append(" ")
+                        .append(resultSet.getString("start_availability")).append(" ")
+                        .append(resultSet.getString("end_availability")).append("\n");
+            }
+            return valueOf(trainerInfo);
+        }
+        catch(Exception e){
+
+            e.printStackTrace();
+
+        }
+        return getTrainerDetails;
+    }
+
 
     public String getTrainerName(){
 

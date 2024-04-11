@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,13 +44,7 @@ public class MemberFunctionsController implements Initializable{
     private Label dashFitnessGoal;
 
     @FXML
-    private Label dashTrainerName;
-
-    @FXML
-    private Label dashTrainingEndDate;
-
-    @FXML
-    private Label dashTrainingsStartDate;
+    private Label dashTrainer;
 
     @FXML
     private Label dashLastMeasured;
@@ -125,6 +118,7 @@ public class MemberFunctionsController implements Initializable{
         dashDisplayBodyFatPercentage.setText(memberFunctions.getBodyFatPercentage());
         dashFitnessGoal.setText(memberFunctions.getFitnessGoal());
         dashFitnessStartEndDate.setText(memberFunctions.getFitnessGoalStartEndDate());
+        dashTrainer.setText(memberFunctions.getTrainerDetails());
 
     }
 
@@ -136,7 +130,7 @@ public class MemberFunctionsController implements Initializable{
         stage.show();
     }
 
-    public void refresUI(){
+    public void refreshUI(){
 
         displayNameLabel.setText(memberFunctions.getMemberUserName());
         dashDisplayWeight.setText(memberFunctions.getWeight());
@@ -145,6 +139,9 @@ public class MemberFunctionsController implements Initializable{
         dashDisplayBodyFatPercentage.setText(memberFunctions.getBodyFatPercentage());
         dashFitnessGoal.setText(memberFunctions.getFitnessGoal());
         dashFitnessStartEndDate.setText(memberFunctions.getFitnessGoalStartEndDate());
+        dashTrainer.setText(memberFunctions.getTrainerName());
+        dashTrainer.setText(memberFunctions.getTrainerDetails());
+
 
     }
 

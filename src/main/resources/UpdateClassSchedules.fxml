@@ -27,10 +27,13 @@
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="roomsDisplay" alignment="TOP_LEFT" prefHeight="630.0" prefWidth="488.0" textFill="#fafafa">
+                  <Label fx:id="classDisplay" alignment="TOP_LEFT" prefHeight="630.0" prefWidth="488.0" textFill="#fafafa">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="11.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
                   </Label>
                </children>
             </VBox>

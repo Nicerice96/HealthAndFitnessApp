@@ -89,7 +89,7 @@
             <Font name="Arial" size="9.0" />
          </font>
       </Label>
-      <SplitPane dividerPositions="0.8835830212234707" layoutX="208.0" layoutY="26.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="713.0" AnchorPane.leftAnchor="214.0">
+      <SplitPane dividerPositions="0.8882646691635455" layoutX="208.0" layoutY="26.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="713.0" AnchorPane.leftAnchor="214.0">
          <items>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="909.0" prefWidth="712.0" style="-fx-background-color: #435370;">
                <children>
@@ -196,17 +196,7 @@
                               </HBox>
                               <HBox prefHeight="46.0" prefWidth="493.0">
                                  <children>
-                                    <Label fx:id="dashTrainerName" prefHeight="46.0" prefWidth="493.0" text="..." textFill="#d9d9d9">
-                                       <font>
-                                          <Font name="Arial" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="dashTrainingsStartDate" prefHeight="46.0" prefWidth="493.0" text="..." textFill="#d9d9d9">
-                                       <font>
-                                          <Font name="Arial" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="dashTrainingEndDate" prefHeight="46.0" prefWidth="493.0" text="..." textFill="#d9d9d9">
+                                    <Label fx:id="dashTrainer" prefHeight="46.0" prefWidth="493.0" text="..." textFill="#d9d9d9">
                                        <font>
                                           <Font name="Arial" size="18.0" />
                                        </font>

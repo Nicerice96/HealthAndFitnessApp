@@ -24,6 +24,7 @@ public class CreateRoomController {
     @FXML
     void createRoom(ActionEvent event) {
         adminFunctions.addRooms(Integer.parseInt(classNameTextField.getText()), classStartTimeTextField.getText(), endTimeTextField.getText());
+        ManageRoomBookingsController.getInstance().refreshUI();
 
     }
 

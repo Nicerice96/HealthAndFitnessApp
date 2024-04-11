@@ -21,6 +21,7 @@ public class AddEquipmentController {
     void equipmentAdd(ActionEvent event) {
 
         adminFunctions.addEquipment(equipmentDescriptionTextField.getText(), lastMaintained.getText());
+        MonitorFitnessEquipmentController.getInstance().refreshUI();
     }
 
 }

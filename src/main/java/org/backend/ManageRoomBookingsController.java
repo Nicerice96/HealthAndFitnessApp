@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ManageRoomBookingsController implements Initializable {
+
+    private static ManageRoomBookingsController manageRoomBookingsController;
     private AdminFunctions adminFunctions = new AdminFunctions(HealthAndFitnessMemberJDBCConnect.getInstance());
 
     @FXML
@@ -32,16 +34,19 @@ public class ManageRoomBookingsController implements Initializable {
     @FXML
     void createRoom(ActionEvent event) {
         openFXML("/CreateRoom.fxml");
+        roomsDisplay.setText(adminFunctions.displayAllRooms());
     }
 
     @FXML
     void deleteButton(ActionEvent event) {
         openFXML("/DeleteRoom.fxml");
+        roomsDisplay.setText(adminFunctions.displayAllRooms());
     }
 
     @FXML
     void rescheduleRoom(ActionEvent event) {
         openFXML("/RescheduleRoom.fxml");
+        roomsDisplay.setText(adminFunctions.displayAllRooms());
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,6 +64,19 @@ public class ManageRoomBookingsController implements Initializable {
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void refreshUI(){
+        roomsDisplay.setText(adminFunctions.displayAllRooms());
+    }
+
+    public static ManageRoomBookingsController getInstance(){
+        if(manageRoomBookingsController == null){
+            return manageRoomBookingsController = new ManageRoomBookingsController();
+        }
+        else{
+            return manageRoomBookingsController;
         }
     }
 }

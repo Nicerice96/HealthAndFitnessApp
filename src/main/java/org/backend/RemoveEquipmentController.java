@@ -16,6 +16,7 @@ public class RemoveEquipmentController {
     @FXML
     void remove(ActionEvent event) {
         adminFunctions.removeRooms(Integer.parseInt(enterRoomNumberTextField.getText()));
+        MonitorFitnessEquipmentController.getInstance().refreshUI();
     }
 
 }

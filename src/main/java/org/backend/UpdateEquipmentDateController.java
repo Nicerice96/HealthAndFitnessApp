@@ -16,6 +16,7 @@ public class UpdateEquipmentDateController {
     @FXML
     void updateLastMaintained(ActionEvent event) {
         adminFunctions.updateMaintainceDate(lastMaintained.getText());
+        MonitorFitnessEquipmentController.getInstance().refreshUI();
     }
 
 }

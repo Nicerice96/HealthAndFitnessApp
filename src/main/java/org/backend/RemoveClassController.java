@@ -18,5 +18,7 @@ public class RemoveClassController {
     @FXML
     void removeClass(ActionEvent event) {
         adminFunctions.removeClass(Integer.parseInt(classNameTextField.getText()));
+        UpdateClassSchedulesController.getInstance().refreshUI();
+
     }
 }

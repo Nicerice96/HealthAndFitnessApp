@@ -18,6 +18,8 @@ public class RemoveRoomController {
     @FXML
     void deleteRoom(ActionEvent event) {
      adminFunctions.removeRooms(Integer.parseInt(classIDTextField.getText()));
+        ManageRoomBookingsController.getInstance().refreshUI();
+
     }
 
     public void rescheduleRoom(MouseEvent mouseEvent) {
