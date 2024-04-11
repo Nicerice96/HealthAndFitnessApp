@@ -1,3 +1,13 @@
+-- Member table
+CREATE TABLE "Member" (
+    member_id SERIAL PRIMARY KEY NOT NULL,
+    username VARCHAR(255),
+    "password" VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    date_of_birth DATE,
+    "address" VARCHAR(255)
+);
+
 -- Trainer table
 CREATE TABLE Trainer (
     trainer_id SERIAL PRIMARY KEY NOT NULL,
@@ -10,27 +20,16 @@ CREATE TABLE Trainer (
 -- Personal Trainer table
 CREATE TABLE Personal_Training (
     training_id SERIAL PRIMARY KEY NOT NULL,
-    member_id INT REFERENCES Member(member_id),
+    member_id INT REFERENCES "Member"(member_id),
     trainer_id INT REFERENCES Trainer(trainer_id),
     "start_date" DATE,
     end_date DATE
 );
 
--- Now the rest of the tables
--- Member table
-CREATE TABLE Member (
-    member_id SERIAL PRIMARY KEY NOT NULL,
-    username VARCHAR(255),
-    "password" VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    date_of_birth DATE,
-    "address" VARCHAR(255)
-);
-
 -- Billing table
 CREATE TABLE Billing (
     billing_id SERIAL PRIMARY KEY NOT NULL,
-    member_id INT REFERENCES Member(member_id),
+    member_id INT REFERENCES "Member"(member_id),
     billing_date DATE,
     amount FLOAT
 );
@@ -39,8 +38,8 @@ CREATE TABLE Billing (
 CREATE TABLE Class_Schedule (
     class_id SERIAL PRIMARY KEY NOT NULL,
     class_name VARCHAR(255),
-    start_time DATE,
-    end_time DATE
+    start_time TIME,
+    end_time TIME
 );
 
 -- Room Booking table
@@ -61,7 +60,7 @@ CREATE TABLE Equipment_Maintenance (
 -- Member Fitness Metric table
 CREATE TABLE Member_Fitness_Metric (
     fitness_metric_id SERIAL PRIMARY KEY NOT NULL,
-    member_id INT REFERENCES Member(member_id),
+    member_id INT REFERENCES "Member"(member_id),
     "weight" FLOAT,
     height FLOAT,
     bmi FLOAT,
