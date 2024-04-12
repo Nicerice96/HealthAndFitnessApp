@@ -148,7 +148,7 @@ public class ApplicationInterface {
             java.util.Date parsedStartDate = dateFormat.parse(startDate);
             java.sql.Date startDateSQL = new java.sql.Date(parsedStartDate.getTime());
 
-            java.util.Date parsedEndDate = dateFormat.parse(startDate);
+            java.util.Date parsedEndDate = dateFormat.parse(endDate);
             java.sql.Date endDateSQL = new java.sql.Date(parsedEndDate.getTime());
 
 
