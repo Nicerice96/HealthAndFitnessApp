@@ -1,5 +1,5 @@
 -- Sample data for Member table
-INSERT INTO "Member" (username, "password", email, date_of_birth, "address")
+INSERT INTO "member" (username, "password", email, date_of_birth, "address")
 VALUES
     ('arun_karki', 'password123', 'karki@example.com', '2003-02-04', '123 Main St'),
     ('zarif_khan', 'abc123', 'khan@example.com', '2003-02-23', '456 Elm St');

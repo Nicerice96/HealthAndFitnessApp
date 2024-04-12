@@ -24,9 +24,9 @@ public class HealthAndFitnessMemberJDBCConnect {
      * @throws RuntimeException if there is an error while loading the JDBC driver or connecting to the database.
      */
     public void connectToDatabase(){
-        String url = "jdbc:postgresql://localhost:5432/HealthAndFitnessDB";
-        String user = "Admin";
-        String password = "M3mb3rP@ssw0rd!";
+        String url = "jdbc:postgresql://localhost:5432/HealthAndFitnessDB"; 
+        String user = "postgres";//"Admin";
+        String password = "test";//"M3mb3rP@ssw0rd!";
 
         try {
             Class.forName("org.postgresql.Driver");
