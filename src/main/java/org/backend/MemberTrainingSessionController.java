@@ -32,13 +32,11 @@ public class MemberTrainingSessionController implements Initializable {
 
     @FXML
     void findTrainerAction(ActionEvent event) {
-        if (this.startDate != null && this.endDate != null) {
-            memberFunctions.scheduleManagement(this.startDate, this.endDate);
-            updateTrainingLabel("Training with:" + memberFunctions.getTrainerName());
-        }
-        else{
-            updateTrainingLabel("No Data Input!");
-        }
+
+        memberFunctions.scheduleManagement(this.startDate, this.endDate);
+        updateTrainingLabel("Training with:" + memberFunctions.getTrainerName());
+
+
     }
 
     @FXML

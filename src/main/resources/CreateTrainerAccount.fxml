@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="935.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.CreateMemberController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="935.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.CreateTrainerController">
    <children>
       <VBox layoutX="306.0" layoutY="124.0" prefHeight="359.0" prefWidth="322.0">
          <children>
-            <Label prefHeight="38.0" prefWidth="338.0" text="Create Account" textFill="WHITE">
+            <Label prefHeight="38.0" prefWidth="338.0" text="Create Trainer Account" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
@@ -24,12 +24,12 @@
                </font>
             </Label>
             <TextField fx:id="userNameTextField" />
-            <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="149.0" text="Set Password:" textFill="#fafafa">
+            <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="149.0" text="Set Specialization" textFill="#fafafa">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordTextField" prefHeight="26.0" prefWidth="326.0" />
+            <PasswordField fx:id="specializationTextField" prefHeight="26.0" prefWidth="326.0" />
             <Label prefHeight="18.0" prefWidth="22.0" text="  " />
             <HBox prefHeight="72.0" prefWidth="322.0">
                <children>

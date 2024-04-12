@@ -36,6 +36,12 @@ public class TrainerLoginController {
     }
 
     public void createTrainerAccountAction(ActionEvent event) {
+
+        try {
+            openFXML("/CreateTrainerAccount.fxml");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void openFXML(String fxml) throws IOException {
