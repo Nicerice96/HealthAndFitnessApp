@@ -32,9 +32,10 @@ This application is designed to serve as a comprehensive platform for managing a
 - Navigate to the  ```HealthAndFitnessMemberJDBCConnect.java``` and click run
 - The application should now be running and is good to go!
 
-## Demonstration Video
+## YouTube Text Version Demonstration
 [![Alt text](https://img.youtube.com/vi/vQqswpxaSW0/0.jpg)](https://www.youtube.com/watch?v=vQqswpxaSW0)
 
+## YouTube UI Version Demonstration
 [![Alt text](https://img.youtube.com/vi/f_C4L8Uz7vo/0.jpg)](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
 
 ## ER-Diagram
