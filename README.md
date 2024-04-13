@@ -39,10 +39,10 @@ This application is designed to serve as a comprehensive platform for managing a
 [![Alt text](https://img.youtube.com/vi/f_C4L8Uz7vo/0.jpg)](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
 
 ## ER-Diagram
-
 ![Alt text](https://github.com/Nicerice96/HealthAndFitnessApp/raw/master/docs/HealthAndFitnessApp-ER.drawio.png)
 
 ## ER-Map
-![HealthAndFitnessAppER-MAP.drawio.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FHealthAndFitnessAppER-MAP.drawio.png)
+![Alt text](https://github.com/Nicerice96/HealthAndFitnessApp/raw/master/docs/HealthAndFitnessAppER-MAP.drawio.png)
+
 ---------------------------------------------------------------------
 © [2024] [Zarif Khan, Arun Karki]. All Rights Reserved.
