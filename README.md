@@ -40,7 +40,7 @@ This application is designed to serve as a comprehensive platform for managing a
 
 ## ER-Diagram
 
-![HealthAndFitnessApp-ER.drawio.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FHealthAndFitnessApp-ER.drawio.png)
+![Alt text](https://github.com/Nicerice96/HealthAndFitnessApp/raw/master/docs/HealthAndFitnessApp-ER.drawio.png)
 
 ## ER-Map
 ![HealthAndFitnessAppER-MAP.drawio.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FHealthAndFitnessAppER-MAP.drawio.png)
