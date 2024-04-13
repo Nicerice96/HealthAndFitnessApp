@@ -33,8 +33,9 @@ This application is designed to serve as a comprehensive platform for managing a
 - The application should now be running and is good to go!
 
 ## Demonstration Video
-[Text Version](https://www.youtube.com/watch?v=vQqswpxaSW0)
-[UI Version](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
+[![Alt text](https://img.youtube.com/vi/vQqswpxaSW0/0.jpg)](https://www.youtube.com/watch?v=vQqswpxaSW0)
+
+[![Alt text](https://img.youtube.com/vi/f_C4L8Uz7vo/0.jpg)](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
 
 ## ER-Diagram
 
