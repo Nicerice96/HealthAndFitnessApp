@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="657.0" prefWidth="847.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.UpdateClassSchedulesController">
+<AnchorPane prefHeight="657.0" prefWidth="847.0" style="-fx-background-color: #435370;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.Controllers.UpdateClassSchedulesController">
    <children>
       <Label alignment="CENTER" layoutX="53.0" layoutY="676.0" prefHeight="51.0" prefWidth="713.0" style="-fx-background-color: #435370;" stylesheets="@LandingStyleSheet.css" text="Copyright © 2024 ActiveEdge. All rights reserved.This application is licensed to you under the terms of the ActiveEdge End User License Agreement. By using this application, you agree to abide by the terms and conditions set forth in the agreement." textAlignment="CENTER" textFill="#e7dddd" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>

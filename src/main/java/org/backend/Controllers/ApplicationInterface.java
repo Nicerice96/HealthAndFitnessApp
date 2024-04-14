@@ -1,10 +1,11 @@
-package org.backend;
+package org.backend.Controllers;
+
+import org.backend.HealthAndFitnessMemberJDBCConnect;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

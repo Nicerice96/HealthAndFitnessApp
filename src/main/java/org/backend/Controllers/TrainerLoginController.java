@@ -1,4 +1,4 @@
-package org.backend;
+package org.backend.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

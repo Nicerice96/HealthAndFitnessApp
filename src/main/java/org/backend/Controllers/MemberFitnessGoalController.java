@@ -1,8 +1,9 @@
-package org.backend;
+package org.backend.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import org.backend.HealthAndFitnessMemberJDBCConnect;
 
 public class MemberFitnessGoalController {
     private  MemberFunctionsController memberFunctionsController = MemberFunctionsController.getInstance();

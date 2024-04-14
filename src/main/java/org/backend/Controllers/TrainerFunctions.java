@@ -1,4 +1,6 @@
-package org.backend;
+package org.backend.Controllers;
+
+import org.backend.HealthAndFitnessMemberJDBCConnect;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;

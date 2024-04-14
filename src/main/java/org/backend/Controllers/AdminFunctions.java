@@ -1,5 +1,6 @@
-package org.backend;
+package org.backend.Controllers;
 
+import org.backend.HealthAndFitnessMemberJDBCConnect;
 import org.postgresql.util.PGInterval;
 
 import java.sql.*;

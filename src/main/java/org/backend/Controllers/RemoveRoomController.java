@@ -1,10 +1,11 @@
-package org.backend;
+package org.backend.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import org.backend.HealthAndFitnessMemberJDBCConnect;
 
 public class RemoveRoomController {
     private AdminFunctions adminFunctions = new AdminFunctions(HealthAndFitnessMemberJDBCConnect.getInstance());

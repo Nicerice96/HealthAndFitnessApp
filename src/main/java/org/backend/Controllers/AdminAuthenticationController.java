@@ -1,4 +1,4 @@
-package org.backend;
+package org.backend.Controllers;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

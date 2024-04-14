@@ -1,4 +1,4 @@
-package org.backend;
+package org.backend.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import org.backend.HealthAndFitnessMemberJDBCConnect;
 
 import java.net.URL;
 import java.util.ResourceBundle;

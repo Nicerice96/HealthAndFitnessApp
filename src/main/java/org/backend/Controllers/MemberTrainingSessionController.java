@@ -1,10 +1,11 @@
-package org.backend;
+package org.backend.Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.backend.HealthAndFitnessMemberJDBCConnect;
 
 import java.net.URL;
 import java.util.ResourceBundle;
