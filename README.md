@@ -29,8 +29,8 @@ This application is designed to serve as a comprehensive platform for managing a
 
 ## How to Run
 - Ensure you have created the required database and have followed the necessary steps in the ```CreateDatabase.txt```
-- Navigate to the  ```HealthAndFitnessMemberJDBCConnect.java``` and click run
-- The application should now be running and is good to go!
+- Open the terminal and enter the command `mvn clean javafx:run`
+- The resources should be compiled and the application should run!
 
 ## Demonstration Video
 _video_
