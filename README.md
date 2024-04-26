@@ -33,7 +33,7 @@ This application is designed to serve as a comprehensive platform for managing a
 - The resources should be compiled and the application should run!
 
 ## Demonstration Video
-_video_
+[_video_](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
 
 ## ER-Diagram
 
