@@ -1,10 +1,11 @@
+package org.backend.Controllers;
+
+import org.backend.HealthAndFitnessMemberJDBCConnect;
 
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,8 @@ import java.util.regex.Pattern;
 public class ApplicationInterface {
 
     private HealthAndFitnessMemberJDBCConnect connect;
+
+    private static ApplicationInterface applicationInterface;
 
 
     private int member_id;
@@ -47,6 +50,12 @@ public class ApplicationInterface {
 
         this.connect = connect;
     }
+
+    public int getMember_id(){
+        return this.member_id;
+    }
+
+    public int getTrainer_id(){return this.trainer_id; }
 
     /**
      * Checks if a member with the given username exists in the database.
@@ -108,22 +117,17 @@ public class ApplicationInterface {
      * Creates a new member account in the database.
      * @param userName The username of the new member.
      * @param userPassword The password of the new member.
-     * @param userEmail The email of the new member.
-     * @param userDateOfBirth The date of birth of the new member (formatted as "yyyy-MM-dd").
-     * @param userAddress The address of the new member.
      */
-    public void createMemberAccount(String userName, String userPassword, String userEmail, String userDateOfBirth, String userAddress){
+    public void createMemberAccount(String userName, String userPassword){
 
-        String insertAccount = "INSERT INTO member (username, password, email, date_of_birth, address) VALUES (?, ?, ?, ?, ?)";
+        String insertAccount = "INSERT INTO member (username, password) VALUES (?, ?)";
 
         try {
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(insertAccount);
 
             preparedStatement.setString(1, userName);
             preparedStatement.setString(2, userPassword);
-            preparedStatement.setString(3, userEmail);
-            preparedStatement.setDate(4, java.sql.Date.valueOf(userDateOfBirth));
-            preparedStatement.setString(5, userAddress);
+
             preparedStatement.executeUpdate();
         }
         catch (SQLException e){
@@ -134,68 +138,53 @@ public class ApplicationInterface {
      * Creates a new trainer account in the database.
      * @param trainerName The name of the new trainer.
      * @param specialization The specialization of the new trainer.
-     * @param startDate The start availability date of the new trainer (formatted as "yyyy-MM-dd").
-     * @param endDate The end availability date of the new trainer (formatted as "yyyy-MM-dd").
      */
 
-    private void createTrainerAccount(String trainerName, String specialization, String startDate, String endDate) {
+    public void createTrainerAccount(String trainerName, String specialization) {
 
         String createTrainer = "INSERT INTO trainer (name, specialization, start_availability, end_availability) VALUES (?, ?, ?, ?)";
 
         try{
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsedStartDate = dateFormat.parse(startDate);
-            java.sql.Date startDateSQL = new java.sql.Date(parsedStartDate.getTime());
-
-            java.util.Date parsedEndDate = dateFormat.parse(endDate);
-            java.sql.Date endDateSQL = new java.sql.Date(parsedEndDate.getTime());
-
-
             PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(createTrainer);
             preparedStatement.setString(1, trainerName);
             preparedStatement.setString(2, specialization);
-            preparedStatement.setDate(3, startDateSQL);
-            preparedStatement.setDate(4, endDateSQL);
-
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
     /**
      * Validates the login credentials of a member.
      * @param userName The username of the member.
-     * @param Password The password of the member.
+     * @param userPassword The password of the member.
      * @return True if the login credentials are valid, otherwise false.
      */
 
-    public boolean validateMemberLogin(String userName, String Password){
+        public boolean validateMemberLogin(String userName, String userPassword){
 
-        String findUser = "SELECT member_id, username, password FROM member WHERE username = ? AND password = ?";
+            String findUser = "SELECT member_id, username, password FROM member WHERE username = ? AND password = ?";
+            String userNameFormatted = userName.replaceAll("\\s+", "");
+            try{
 
-        try{
+                PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(findUser);
+                preparedStatement.setString(1, userNameFormatted);
+                preparedStatement.setString(2, userPassword);
+                ResultSet userMatch = preparedStatement.executeQuery();
 
-            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(findUser);
-            preparedStatement.setString(1, userName);
-            preparedStatement.setString(2, Password);
-            ResultSet userMatch = preparedStatement.executeQuery();
+                if (userMatch.next()){
 
-            if (userMatch.next()){
-
-                this.member_id = userMatch.getInt("member_id");
-                return true;
+                    this.member_id = userMatch.getInt("member_id");
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-            else{
-                return false;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
-    }
     /**
      * Validates the login credentials of a trainer.
      * @param userName The username of the trainer.
@@ -304,7 +293,7 @@ public class ApplicationInterface {
                 String homeAddressString = scanHomeAddress.nextLine();
                 this.userAddress = homeAddressString;
 
-                createMemberAccount(this.userName, this.userPassword, this.userEmail, this.userDateOfBirth, this.userAddress);
+//                createMemberAccount(this.userName, this.userPassword, this.userEmail, this.userDateOfBirth, this.userAddress);
 
 
             }
@@ -376,14 +365,11 @@ public class ApplicationInterface {
                 Scanner scanTrainerEnd = new Scanner(System.in);
                 String endDate = scanTrainerEnd.nextLine();
 
-                createTrainerAccount(trainerName, specialization, startDate, endDate);
+//                createTrainerAccount(trainerName, specialization, startDate, endDate);
             }
 
 
         }
-
-
-
 
     }
     /**
@@ -447,8 +433,20 @@ public class ApplicationInterface {
                 this.connect.closeJDBCConnection();
             }
 
-
-
         }
+
     }
+
+    public static ApplicationInterface getInstance(){
+
+        if (applicationInterface == null){
+            applicationInterface = new ApplicationInterface(HealthAndFitnessMemberJDBCConnect.getInstance());
+        }
+        return applicationInterface;
+
+
+    }
+
+
+
 }

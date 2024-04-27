@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.backend.Controllers.LandingController">
+   <children>
+      <MenuBar layoutY="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <menus>
+          <Menu fx:id="exitLanding" mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <VBox layoutY="27.0" prefHeight="686.0" prefWidth="215.0" style="-fx-background-color: #364e7a;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="712.0">
+         <children>
+            <Label prefHeight="46.0" prefWidth="216.0" text="  Login" textFill="#c2c2c2">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="memberLoginButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#memberButtonAction" prefHeight="50.0" prefWidth="214.0" style="-fx-background-color: #364e7a;" text="Member" textFill="#aeaeae">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="trainerLoginButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#trainerButtonAction" prefHeight="50.0" prefWidth="214.0" style="-fx-background-color: #364e7a;" text="Trainer" textFill="#aeaeae">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="adminLoginButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#adminButtonAction" prefHeight="50.0" prefWidth="214.0" style="-fx-background-color: #364e7a;" text="Admin" textFill="#aeaeae">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <Label alignment="CENTER" layoutX="214.4" layoutY="666.4" prefHeight="51.0" prefWidth="713.0" style="-fx-background-color: #435370;" stylesheets="@LandingStyleSheet.css" text="Copyright © 2024 ActiveEdge. All rights reserved.This application is licensed to you under the terms of the ActiveEdge End User License Agreement. By using this application, you agree to abide by the terms and conditions set forth in the agreement." textAlignment="CENTER" textFill="#e7dddd" wrapText="true" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="666.0">
+         <font>
+            <Font name="Arial" size="9.0" />
+         </font>
+      </Label>
+      <SplitPane dividerPositions="0.880461922596754" layoutX="208.0" layoutY="26.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="713.0" AnchorPane.leftAnchor="214.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="129.0" prefWidth="712.0" style="-fx-background-color: #435370;">
+               <children>
+                  <Label layoutX="259.0" layoutY="135.0" text="Active Edge" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="35.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="857.0" style="-fx-background-color: #435370;">
+               <children>
+                  <Text fill="#d9d9d9" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Nunito;" text="Active Edge is proud to offer a comprehensive fitness management system designed to streamline operations and enhance member experiences. Our application seamlessly integrates various functionalities crucial to the efficient operation of fitness centers. With modules for billing, class scheduling, equipment maintenance, member management, fitness tracking, routines, personal training, and room bookings, our platform empowers gym owners and administrators to efficiently manage every aspect of their facility. Members benefit from personalized experiences, with features enabling them to track their fitness progress, book classes and personal training sessions, and access a range of amenities. With Active Edge, fitness centers can optimize resource allocation, enhance member engagement, and ultimately foster a vibrant and thriving community focused on health and wellness." wrappingWidth="684.4097213745117" AnchorPane.bottomAnchor="471.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="14.0">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

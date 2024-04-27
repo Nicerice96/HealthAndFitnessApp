@@ -1,3 +1,7 @@
+package org.backend.Controllers;
+
+import org.backend.HealthAndFitnessMemberJDBCConnect;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +18,7 @@ public class TrainerFunctions {
 
     private boolean flag = true;
 
+
     private HealthAndFitnessMemberJDBCConnect connect;
     private int trainerID;
     /**
@@ -26,6 +31,48 @@ public class TrainerFunctions {
         this.connect = connect;
         this.trainerID = trainerID;
     }
+
+    public boolean checkExists(String coloumn, String table){
+
+        String check = "SELECT " + coloumn + " FROM " + table;
+
+        try{
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(check);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                if (resultSet.wasNull()) {
+                    return false; // Data is null
+                } else {
+                    return true; // Data is not null
+                }
+            } else {
+                System.out.println("No data found in the specified table and column.");
+                return false; // No data found
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getTrainerName(){
+
+        String getTrainerName = "SELECT name FROM trainer WHERE trainer_id = ? ";
+
+        try{
+            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(getTrainerName);
+            preparedStatement.setInt(1, this.trainerID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String name = "";
+            while(resultSet.next()){
+                name = resultSet.getString("name");
+            }
+            return name;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Retrieves the start date of the trainer's availability.
      * @return The start date of availability
@@ -103,56 +150,79 @@ public class TrainerFunctions {
 
 
     }
+
+    public boolean checkAvailable(){
+
+        if (checkExists("trainer_id, start_date, end_date", "personal_training")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     /**
      * Adds the trainer to the personal training schedule, making them available to members.
      */
-    public void makeAvailableToMembers(){
+    public boolean makeAvailableToMembers(){
         //adds trainer to the personal training table
 
-        String insertTrainer = "INSERT INTO personal_training (trainer_id, start_date, end_date) VALUES (?, ?, ?)";
-
-        try{
-            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(insertTrainer);
-            preparedStatement.setInt(1, this.trainerID);
-            preparedStatement.setDate(2, returnStartDate());
-            preparedStatement.setDate(3, returnEndDate());
-
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        System.out.println(this.trainerID);
+        if(checkExists("trainer_id, start_date, end_date", "personal_training")){
+            System.out.println("You are already available to the public");
+            return false;
         }
+        else {
+
+            String insertTrainer = "INSERT INTO personal_training (trainer_id, start_date, end_date) VALUES (?, ?, ?)";
+
+            try {
+                PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(insertTrainer);
+                preparedStatement.setInt(1, this.trainerID);
+                preparedStatement.setDate(2, returnStartDate());
+                preparedStatement.setDate(3, returnEndDate());
+
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return true;
     }
     /**
      * Removes the trainer from the personal training schedule, making them unavailable to members.
      */
-    public void makeUnavailableToMembers(){
+    public boolean makeUnavailableToMembers(){
 
-        String makeUnavailable = "DELETE FROM personal_training WHERE trainer_id = ?";
+        if(!checkExists("trainer_id, start_date, end_date", "personal_training")){
+            System.out.println("You are not avaiable to the public");
+            return false;
 
-        try{
-            PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(makeUnavailable);
-            preparedStatement.setInt(1, this.trainerID);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+        else {
+            String makeUnavailable = "DELETE FROM personal_training WHERE trainer_id = ?";
+
+            try {
+                PreparedStatement preparedStatement = this.connect.getConn().prepareStatement(makeUnavailable);
+                preparedStatement.setInt(1, this.trainerID);
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return true;
 
         //removes the trainer from the personal training table
     }
     /**
      * Updates the availability schedule of the trainer.
      */
-    public void updateAvailability(){
+    public void updateAvailability(String startDateString, String endDateString){
 
-        System.out.println("Enter new start date:");
-        Scanner scanStartDate = new Scanner(System.in);
-        String startDateString = scanStartDate.nextLine();
 
-        System.out.println("Enter new end date: ");
-        Scanner scanEndDate = new Scanner(System.in);
-        String endDateString = scanEndDate.nextLine();
 
         String update = "UPDATE trainer SET start_date = ?, end_date = ? WHERE trainer_ID = ? ";
 
@@ -196,14 +266,14 @@ public class TrainerFunctions {
                 makeUnavailableToMembers();
                 break;
             case 3:
-                updateAvailability();
+//                updateAvailability();
                 break;
         }
     }
     /**
      * Displays profiles of members assigned to the trainer along with their training schedule.
      */
-    public void viewMemberProfiles(){
+    public String viewMemberProfiles(){
 
         String getMemberID = "SELECT start_date, end_date, username, trainer.name FROM personal_training JOIN \"member\" ON personal_training.member_id = \"member\".member_id JOIN trainer ON personal_training.trainer_id = trainer.trainer_id WHERE personal_training.trainer_id = ?";
         try{
@@ -212,15 +282,19 @@ public class TrainerFunctions {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            String member = "";
+
             while (resultSet.next()){
 
                 String username = resultSet.getString("username");
                 Date startDate = resultSet.getDate("start_date");
                 Date endDate = resultSet.getDate("end_date");
 
-                System.out.println("username: " + username + " start date: " + startDate + " end date: " + endDate);
+                member =  ("username: " + username + " start date: " + startDate + " end date: " + endDate);
 
             }
+
+            return member;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

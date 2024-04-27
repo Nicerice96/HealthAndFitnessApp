@@ -29,20 +29,18 @@ This application is designed to serve as a comprehensive platform for managing a
 
 ## How to Run
 - Ensure you have created the required database and have followed the necessary steps in the ```CreateDatabase.txt```
-- Navigate to the  ```HealthAndFitnessMemberJDBCConnect.java``` and click run
-- The application should now be running and is good to go!
+- Open the terminal and enter the command `mvn clean javafx:run`
+- The resources should be compiled and the application should run!
 
-## Text Version Demonstration
-[![Alt text](https://img.youtube.com/vi/vQqswpxaSW0/0.jpg)](https://www.youtube.com/watch?v=vQqswpxaSW0)
-
-## UI Version Demonstration
-[![Alt text](https://img.youtube.com/vi/f_C4L8Uz7vo/0.jpg)](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
+## Demonstration Video
+[_video_](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
 
 ## ER-Diagram
-![Alt text](https://github.com/Nicerice96/HealthAndFitnessApp/raw/master/docs/HealthAndFitnessApp-ER.drawio.png)
+
+![HealthAndFitnessApp-ER.drawio.png](..%2F..%2F..%2F..%2F..%2Fdocs%2FHealthAndFitnessApp-ER.drawio.png)
 
 ## ER-Map
-![Alt text](https://github.com/Nicerice96/HealthAndFitnessApp/raw/master/docs/HealthAndFitnessAppER-MAP.drawio.png)
 
+![HealthAndFitnessAppER-MAP.drawio.png](..%2F..%2F..%2F..%2F..%2Fdocs%2FHealthAndFitnessAppER-MAP.drawio.png)
 ---------------------------------------------------------------------
 © [2024] [Zarif Khan, Arun Karki]. All Rights Reserved.
