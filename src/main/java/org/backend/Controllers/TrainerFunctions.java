@@ -256,7 +256,6 @@ public class TrainerFunctions {
         System.out.println("Manage Schedule:\n1. Make Schedule Available to Members\n2. Make Schedule Unavailable To Members\n3. Update Schedule Availability");
         Scanner scanInput = new Scanner(System.in);
         int userInput = scanInput.nextInt();
-
         switch(userInput){
 
             case 1:
@@ -268,7 +267,9 @@ public class TrainerFunctions {
             case 3:
 //                updateAvailability();
                 break;
+
         }
+        scanInput.close();
     }
     /**
      * Displays profiles of members assigned to the trainer along with their training schedule.
@@ -315,6 +316,7 @@ public class TrainerFunctions {
         while (flag) {
 
             System.out.println("Welcome to the Trainer landing page!\nWhat action would you like to perform?\n1. manageSchedule\n2. viewMemberProfiles\nPress 0 to exit");
+            @SuppressWarnings("resource")
             Scanner scanTrainerAction = new Scanner(System.in);
             int trainerAction = scanTrainerAction.nextInt();
 

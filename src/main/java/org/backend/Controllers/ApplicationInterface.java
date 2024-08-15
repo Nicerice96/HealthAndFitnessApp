@@ -222,12 +222,14 @@ public class ApplicationInterface {
 
         System.out.println("1. Login\n2. Create Account?\nPress 0 to exit and close application");
 
+        @SuppressWarnings("resource")
         Scanner userInput = new Scanner(System.in);
         String userInputString = userInput.nextLine();
 
         if (Integer.parseInt(userInputString) == 1){
 
             System.out.println("Please Enter User name: ");
+            @SuppressWarnings("resource")
             Scanner scanUsername = new Scanner(System.in);
             this.userName = scanUsername.nextLine();
 
@@ -235,6 +237,7 @@ public class ApplicationInterface {
             while (attempts < 3) {
 
                 System.out.println("Please Enter Password: ");
+                @SuppressWarnings("resource")
                 Scanner scanUserPassword = new Scanner(System.in);
                 this.userPassword = scanUserPassword.nextLine();
 
@@ -256,6 +259,7 @@ public class ApplicationInterface {
         else if (Integer.parseInt(userInputString) == 2) {
 
             System.out.println("Please Enter User name: ");
+            @SuppressWarnings("resource")
             Scanner scanUsername = new Scanner(System.in);
             this.userName = scanUsername.nextLine();
 
@@ -266,11 +270,13 @@ public class ApplicationInterface {
 
 
                 System.out.println("Please Enter Password: ");
+                @SuppressWarnings("resource")
                 Scanner scanUserPassword = new Scanner(System.in);
                 this.userPassword = scanUserPassword.nextLine();
 
                 while (!validEmail) {
                     System.out.println("Please Enter Email:");
+                    @SuppressWarnings("resource")
                     Scanner scanEmail = new Scanner(System.in);
                     this.userEmail = scanEmail.nextLine();
 
@@ -284,11 +290,13 @@ public class ApplicationInterface {
                 }
 
                 System.out.println("Please Enter Date of Birth");
+                @SuppressWarnings("resource")
                 Scanner scanDateOfBirth = new Scanner(System.in);
                 String dataOfBirthString = scanDateOfBirth.nextLine();
                 this.userDateOfBirth = dataOfBirthString;
 
                 System.out.println("Please enter Home address");
+                @SuppressWarnings("resource")
                 Scanner scanHomeAddress = new Scanner(System.in);
                 String homeAddressString = scanHomeAddress.nextLine();
                 this.userAddress = homeAddressString;
@@ -322,12 +330,14 @@ public class ApplicationInterface {
     public void trainerLogin(){
 
         System.out.println("Would you like to:\n1. Login\n2. Create Account");
+        @SuppressWarnings("resource")
         Scanner userChoice = new Scanner(System.in);
         int userChoiceInt = userChoice.nextInt();
 
         if (userChoiceInt == 1) {
 
             System.out.println("Enter your user Name");
+            @SuppressWarnings("resource")
             Scanner scanUserName = new Scanner(System.in);
             String userName = scanUserName.nextLine();
 
@@ -343,6 +353,7 @@ public class ApplicationInterface {
         else if (userChoiceInt == 2){
 
             System.out.println("Input a Trainer name:");
+            @SuppressWarnings("resource")
             Scanner scanTrainerName = new Scanner(System.in);
             String trainerName = scanTrainerName.nextLine();
 
@@ -354,15 +365,21 @@ public class ApplicationInterface {
             }
             else{
                 System.out.println("Enter Trainer specialization:");
+                @SuppressWarnings("resource")
                 Scanner scanSpecialization = new Scanner(System.in);
+                @SuppressWarnings("unused")
                 String specialization = scanSpecialization.nextLine();
 
                 System.out.println("When does Trainer availability begin?");
+                @SuppressWarnings("resource")
                 Scanner scanTrainerStart = new Scanner(System.in);
+                @SuppressWarnings("unused")
                 String startDate = scanTrainerStart.nextLine();
 
                 System.out.println("When does Trainer availability end");
+                @SuppressWarnings("resource")
                 Scanner scanTrainerEnd = new Scanner(System.in);
+                @SuppressWarnings("unused")
                 String endDate = scanTrainerEnd.nextLine();
 
 //                createTrainerAccount(trainerName, specialization, startDate, endDate);
@@ -393,6 +410,7 @@ public class ApplicationInterface {
 
             System.out.println("Application running : Please indicate whether you are a Member, Trainer, or Admin\nTo close the app press 0");
 
+            @SuppressWarnings("resource")
             Scanner userType = new Scanner(System.in);
             String userTypeInput = userType.nextLine();
 

@@ -173,6 +173,8 @@ public class AdminFunctions {
         else if (userInput == 3){
 //            updateRoomAvailability();    updateRoomAvailability();
         }
+
+        scanUserInput.close();
     }
     /**
      * Displays all fitness equipment along with their last maintenance date.
@@ -292,6 +294,7 @@ public class AdminFunctions {
 //                removeEquipment();
                 break;
         }
+        userInput.close();
     }
     /**
      * Adds a new class to the class schedule.
@@ -366,6 +369,7 @@ public class AdminFunctions {
 //                removeClass();
                 break;
         }
+        scanner.close();
     }
 
     public String displayAllClasses(){
@@ -533,6 +537,8 @@ public class AdminFunctions {
                     break;
 
             }
+
+            scanTrainerAction.close();
 
         }
     }

@@ -578,11 +578,13 @@ public class MemberFunctions {
      */
     public void updateMeasurementDate() throws SQLException, ParseException {
         System.out.println("Would you like to update:\n1. Metrics\n2. Routine");
+        @SuppressWarnings("resource")
         Scanner scanUserMetricChoice = new Scanner(System.in);
         int userMetricChoice = scanUserMetricChoice.nextInt();
 
         if (userMetricChoice == 1) {
             System.out.println("When did you measure this metric? (Enter date in format yyyy-MM-dd)");
+            @SuppressWarnings("resource")
             Scanner scanDate = new Scanner(System.in);
             String dateStringInput = scanDate.next();
 
@@ -602,6 +604,7 @@ public class MemberFunctions {
             display("member_routine", "routine_title");
             System.out.println("Select a routine you would like to update by typing it out:");
             try  {
+                @SuppressWarnings("resource")
                 Scanner scanSelectedRoutine = new Scanner(System.in);
                 String selectedRoutineString = scanSelectedRoutine.nextLine();
 
@@ -858,7 +861,9 @@ public class MemberFunctions {
         if (selectedOption == 1){
 
             System.out.println("Would you like to:\n1. Insert a new weight\n2. Update your already existing weight?");
+            @SuppressWarnings("resource")
             Scanner scanner = new Scanner(System.in);
+            @SuppressWarnings("unused")
             int userInput = scanner.nextInt();
 
 //            if (userInput == 1) {
@@ -871,6 +876,7 @@ public class MemberFunctions {
         }
         else if (selectedOption == 2){
             System.out.println("Would you like to:\n1. Insert a new height\n2. Update your already existing height?");
+            @SuppressWarnings("resource")
             Scanner scanner = new Scanner(System.in);
             int userInput = scanner.nextInt();
 
@@ -883,6 +889,7 @@ public class MemberFunctions {
         }
         else if (selectedOption == 3){
             System.out.println("Would you like to:\n1. Insert a new bmi\n2. Update your already existing bmi?");
+            @SuppressWarnings("resource")
             Scanner scanner = new Scanner(System.in);
             int userInput = scanner.nextInt();
 
@@ -896,7 +903,9 @@ public class MemberFunctions {
         }
         else if (selectedOption == 4){
             System.out.println("Would you like to:\n1. Insert a new body fat percentage\n2. Update your already existing body fat percentage?");
+            @SuppressWarnings("resource")
             Scanner scanner = new Scanner(System.in);
+            @SuppressWarnings("unused")
             int userInput = scanner.nextInt();
 
 //            if (userInput == 1){
@@ -954,6 +963,7 @@ public class MemberFunctions {
 
             System.out.println("What would you like to do to your account?\n1. Update weight\n2. Update height\n3. Update bmi\n4. Update body fat percentage\n5. Update measurement date\n6. Update fitness routine/goals\nPress 0 to exit");
 
+            @SuppressWarnings("resource")
             Scanner userUpdate = new Scanner(System.in);
             int userInput = userUpdate.nextInt();
             userUpdate.nextLine();
@@ -1160,6 +1170,7 @@ public class MemberFunctions {
 
         while(flag){
             System.out.println("Options:\n1. profileManagement\n2. dashboardDisplay\n3. scheduleManagement\nPress 0 to exit ");
+            @SuppressWarnings("resource")
             Scanner userAction = new Scanner(System.in);
             String userActionString = userAction.nextLine();
 
