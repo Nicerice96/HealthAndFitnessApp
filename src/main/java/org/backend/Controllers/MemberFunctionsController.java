@@ -111,7 +111,7 @@ public class MemberFunctionsController implements Initializable{
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.memberContollerFunctionsInstance = this;
+        memberContollerFunctionsInstance = this;
         displayNameLabel.setText(memberFunctions.getMemberUserName());
         dashDisplayWeight.setText(memberFunctions.getWeight());
         dashDisplayHeight.setText(memberFunctions.getHeight());
