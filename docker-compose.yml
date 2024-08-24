@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    image: openjdk:22-jdk-slim
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/HealthAndFitnessDB
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=test
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=HealthAndFitnessDB
+    ports:
+      - "5432:5432"

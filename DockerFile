@@ -1,0 +1,2 @@
+FROM openjdk:22-jdk-slim
+WORKDIR /src/main/java/org/backend

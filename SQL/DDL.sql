@@ -9,7 +9,7 @@ CREATE TABLE "member" (
 );
 
 -- Trainer table
-CREATE TABLE Trainer (
+CREATE TABLE trainer (
     trainer_id SERIAL PRIMARY KEY NOT NULL,
     "name" VARCHAR(255),
     specialization VARCHAR(255),
@@ -18,7 +18,7 @@ CREATE TABLE Trainer (
 );
 
 -- Personal Trainer table
-CREATE TABLE Personal_Training (
+CREATE TABLE personal_training (
     training_id SERIAL PRIMARY KEY NOT NULL,
     member_id INT REFERENCES "member"(member_id),
     trainer_id INT REFERENCES Trainer(trainer_id),
@@ -27,7 +27,7 @@ CREATE TABLE Personal_Training (
 );
 
 -- Billing table
-CREATE TABLE Billing (
+CREATE TABLE billing (
     billing_id SERIAL PRIMARY KEY NOT NULL,
     member_id INT REFERENCES "member"(member_id),
     billing_date DATE,
@@ -35,7 +35,7 @@ CREATE TABLE Billing (
 );
 
 -- Class Schedule table
-CREATE TABLE Class_Schedule (
+CREATE TABLE class_Schedule (
     class_id SERIAL PRIMARY KEY NOT NULL,
     class_name VARCHAR(255),
     start_time TIME,
@@ -43,22 +43,31 @@ CREATE TABLE Class_Schedule (
 );
 
 -- Room Booking table
-CREATE TABLE Room_Booking (
+CREATE TABLE room_booking (
     booking_no SERIAL PRIMARY KEY NOT NULL,
     room_number INT,
     "start_date" DATE,
     end_date DATE
 );
 
+CREATE TABLE member_routine(
+    routine_id SERIAL PRIMARY KEY NOT NULL,
+    member_id INT REFERENCES "member"(member_id),
+    routine_title VARCHAR(255),
+    "description" VARCHAR(255),
+    "start_date" DATE,
+    end_date DATE,
+
+)
 -- Equipment Maintenance table
-CREATE TABLE Equipment_Maintenance (
+CREATE TABLE equipment_maintenance (
     maintenance_id SERIAL PRIMARY KEY NOT NULL,
     maintenance_date DATE,
     "description" VARCHAR(255)
 );
 
 -- Member Fitness Metric table
-CREATE TABLE Member_Fitness_Metric (
+CREATE TABLE member_fitness_metric (
     fitness_metric_id SERIAL PRIMARY KEY NOT NULL,
     member_id INT REFERENCES "member"(member_id),
     "weight" FLOAT,
