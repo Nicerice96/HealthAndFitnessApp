@@ -1,2 +1,9 @@
 FROM openjdk:22-jdk-slim
-WORKDIR /src/main/java/org/backend
+
+RUN apt-get update && apt-get install -y xvfb
+
+WORKDIR /app
+
+COPY target/HFA-1.jar /app/HFA-1.jar
+
+ENTRYPOINT ["xvfb-run", "java", "-jar", "HFA-1.jar"]

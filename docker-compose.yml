@@ -22,4 +22,4 @@ services:
       - POSTGRES_PASSWORD=test
       - POSTGRES_DB=HealthAndFitnessDB
     ports:
-      - "5432:5432"
+      - "8000:8000"
