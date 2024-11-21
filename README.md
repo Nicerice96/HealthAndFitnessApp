@@ -32,15 +32,12 @@ This application is designed to serve as a comprehensive platform for managing a
 - Open the terminal and enter the command `mvn clean javafx:run`
 - The resources should be compiled and the application should run!
 
-## Demonstration Video
-[_video_](https://www.youtube.com/watch?v=f_C4L8Uz7vo)
-
 ## ER-Diagram
 
-![HealthAndFitnessApp-ER.drawio.png](..%2F..%2F..%2F..%2F..%2Fdocs%2FHealthAndFitnessApp-ER.drawio.png)
+![alt text](docs/HealthAndFitnessApp-ER.drawio.png)
 
 ## ER-Map
 
-![HealthAndFitnessAppER-MAP.drawio.png](..%2F..%2F..%2F..%2F..%2Fdocs%2FHealthAndFitnessAppER-MAP.drawio.png)
+![alt text](docs/HealthAndFitnessAppER-MAP.drawio.png)
 ---------------------------------------------------------------------
 © [2024] [Zarif Khan, Arun Karki]. All Rights Reserved.
